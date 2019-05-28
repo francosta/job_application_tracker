@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::API
 
-helper_method :current_user, :logged_in?, :authorized?
+# helper_method :current_user, :logged_in?, :authorized?
     
 # Check who the current user is
     def current_user
