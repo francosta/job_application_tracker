@@ -1,15 +1,4 @@
-/*
- *
- * login-register modal
- * Autor: Creative Tim
- * Web-autor: creative.tim
- * Web script: http://creative-tim.com
- *
- */
-
 const formEl = document.querySelector("form");
-const USER_URL = "http://localhost:3000/users";
-const SESSIONS_URL = "http://localhost:3000/sessions";
 let currentUserId = null;
 
 function showRegisterForm() {
@@ -51,21 +40,6 @@ function openRegisterModal() {
   }, 230);
 }
 
-function loginAjax() {
-  /*   Remove this comments when moving to server
-    $.post( "/login", function( data ) {
-            if(data == 1){
-                window.location.replace("/home");            
-            } else {
-                 shakeModal(); 
-            }
-        });
-    */
-
-  /*   Simulate error message from the server   */
-  shakeModal();
-}
-
 function shakeModal() {
   $("#loginModal .modal-dialog").addClass("shake");
   $(".error")
@@ -79,20 +53,26 @@ function shakeModal() {
 
 const login = () => {
   const userEmail = formEl.querySelector("#email").value;
+  const userPassword = formEl.querySelector("#password").value;
+  const SESSIONS_URL = "http://localhost:3000/sessions";
   const options = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email: userEmail })
+    body: JSON.stringify({ email: userEmail, password: userPassword })
   };
-  return fetch(SESSIONS_URL, options)
-    .then(response => response.json())
-    .then(id => (currentUserId = id))
-    .then(window.location.replace("./index.html"));
+  return fetch(SESSIONS_URL, options).then(response => {
+    if (response.status === 200) {
+      response.json().then(id => (currentUserId = id));
+      window.location.replace("./index.html");
+    } else {
+      shakeModal();
+    }
+  });
 };
 
 const listenToForm = () => {
   formEl.addEventListener("submit", e => {
-    e.preventDefault(), login(SESSIONS_URL);
+    e.preventDefault(), login();
   });
 };
 
