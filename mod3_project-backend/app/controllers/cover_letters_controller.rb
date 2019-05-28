@@ -1,0 +1,2 @@
+class CoverLettersController < ApplicationController
+end
