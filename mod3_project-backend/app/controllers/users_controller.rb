@@ -10,6 +10,4 @@ class UsersController < ApplicationController
         render json: UserSerializer.new(@user).to_serialized_hash
     end
 
-    # Test commment
-
 end
