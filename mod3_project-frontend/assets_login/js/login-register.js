@@ -12,7 +12,7 @@ function showRegisterForm(){
         $('.login-footer').fadeOut('fast',function(){
             $('.register-footer').fadeIn('fast');
         });
-        $('.modal-title').html('Register with');
+        $('.modal-title').html('Register with your email address');
     }); 
     $('.error').removeClass('alert alert-danger').html('');
        
@@ -24,7 +24,7 @@ function showLoginForm(){
             $('.login-footer').fadeIn('fast');    
         });
         
-        $('.modal-title').html('Login with');
+        $('.modal-title').html('Login with your email address');
     });       
      $('.error').removeClass('alert alert-danger').html(''); 
 }
@@ -61,7 +61,7 @@ function loginAjax(){
 
 function shakeModal(){
     $('#loginModal .modal-dialog').addClass('shake');
-             $('.error').addClass('alert alert-danger').html("Invalid email/password combination");
+             $('.error').addClass('alert alert-danger').html("Invalid email! Try again.");
              $('input[type="password"]').val('');
              setTimeout( function(){ 
                 $('#loginModal .modal-dialog').removeClass('shake'); 
