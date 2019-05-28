@@ -1,22 +1,14 @@
 class SessionsController < ApplicationController
 
 #  Initiate new session (user logs in)
-  def new
-    if session[:user_id]
-      redirect_to(posts_path)
-    end
-  end
 
   #  Create new session
   def create
-    user = User.find_by(email: params[:email])
-    if user && user.authenticate(params[:password])
-     session[:user_id] = user.id
-     flash[:success] = "Successfully Logged In!"
-     redirect_to user_path(user.id)
+    user = User.find_by(email: params["email"])
+    if user
+      render json: user.id
     else
-     flash[:warning] = "Incorrect username or password"
-     redirect_to(login_path)
+     render json: [message: "No user found with this email."]
     end
   end
 

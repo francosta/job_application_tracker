@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :cover_letters
-  get 'sessions/new'
+  resources :sessions
   resources :tasks
   resources :applications
   resources :users

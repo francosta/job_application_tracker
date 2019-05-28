@@ -1,5 +1,5 @@
 // alert("Test")
-const userURL = "http://localhost:3000/users"
+const userURL = "http://localhost:3000/users";
 
 // const ongoingApplications = document.getElementById("ongoing-applications")
 // ongoingApplications.innerText = "TEST ONGOING"
@@ -9,5 +9,5 @@ function getUsers(userURL) {
 }
 
 function renderOngoingApplications(users) {
-  const ongoingApplications = document.getElementById("ongoing-applications")
+  const ongoingApplications = document.getElementById("ongoing-applications");
 }
