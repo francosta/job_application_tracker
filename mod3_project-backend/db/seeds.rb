@@ -4,11 +4,11 @@ CoverLetter.destroy_all
 Application.destroy_all
 
 10.times do
-    User.create(name: Faker::Name.unique.name, password: Faker::String.random(3..12), education: Faker::Job.education_level, image: Faker::LoremFlickr.image)
+    User.create(name: Faker::Name.unique.name, password: Faker::String.random(3..12), education: Faker::Job.education_level, image: Faker::LoremFlickr.image, email: Faker::Internet.email)
 end
 
-User.create(name: "Fran", password: "password", education: "Doctorate", image: "https://drive.google.com/uc?&id=1AM-P8361aVt4cB0Pl9jJs7nHQCJAUZdv")
-User.create(name: "Endy", password: "password", education: "First Grade")
+User.create(name: "Fran", email: "francisco@fcosta.pt", password: "password", education: "Doctorate", image: "https://drive.google.com/uc?&id=1AM-P8361aVt4cB0Pl9jJs7nHQCJAUZdv")
+User.create(name: "Endy", email: "endyranaudo@gmail.pt", password: "password", education: "First Grade")
 
 30.times do
     Application.create(company_name: Faker::Company.name, person_of_contact: Faker::Name.unique.name, user_id: User.all.sample.id, role: Faker::Job.title)

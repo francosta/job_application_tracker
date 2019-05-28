@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_28_143304) do
+ActiveRecord::Schema.define(version: 2019_05_28_150518) do
 
   create_table "applications", force: :cascade do |t|
     t.string "person_of_contact"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 2019_05_28_143304) do
     t.datetime "updated_at", null: false
     t.string "image"
     t.string "education"
+    t.string "email"
   end
 
 end
