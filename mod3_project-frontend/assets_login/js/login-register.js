@@ -1,6 +1,7 @@
 const formEl = document.querySelector("form");
 let currentUserId = null;
 
+// From the template
 function showRegisterForm() {
   $(".loginBox").fadeOut("fast", function() {
     $(".registerBox").fadeIn("fast");
@@ -51,6 +52,7 @@ function shakeModal() {
   }, 1000);
 }
 
+//Done by us
 const login = () => {
   const userEmail = formEl.querySelector("#email").value;
   const userPassword = formEl.querySelector("#password").value;
