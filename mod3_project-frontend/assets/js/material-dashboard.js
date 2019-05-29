@@ -779,22 +779,23 @@ function getUser() {
   return fetch(userURL).then(resp => resp.json());
 }
 
-const renderOngoingApplications = user => {
+const renderNoOngoingApplications = user => {
   const ongoingApplications = document.getElementById("ongoing-applications");
   const numberOfApplications = user.applications.length;
   ongoingApplications.innerText = numberOfApplications;
 };
 
-// const renderTasks = user => {
-//   const userTasks = user.applications
-//     .map(application =>
-//       application.tasks.map(task => {
-//         return task;
-//       })
-//     )
-//     .flat();
-//   console.log(userTasks);
-// };
+const renderTasks = () => {
+  const userTasks = user.applications
+    .map(application =>
+      application.tasks.map(task => {
+        return task;
+      })
+    )
+    .flat();
+  const tasksTableEl = document.querySelector("#tasksTableEl");
+  debugger;
+};
 
 const renderNoTasks = user => {
   const tasksDueEl = document.getElementById("TasksDue");
@@ -1035,9 +1036,10 @@ const init = () => {
 const loadDashboard = () => {
   getUser().then(resp => {
     user = resp;
-    renderOngoingApplications(user);
+    renderNoOngoingApplications(user);
     renderNoTasks(user);
     renderApplications();
+    renderTasks();
   });
 };
 
