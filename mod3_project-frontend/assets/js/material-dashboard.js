@@ -858,7 +858,7 @@ const editApplication = application => {
       <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="" />
     </div>
     <!-- Edit Application Form -->
-    <form id="editApplicationForm" >
+    <form id="editApplicationForm" data-application_id="${application.id}">
       <input type="text" id="companyName" class="fadeIn second" name="Company Name" value=${companyName}>
       <input type="text" id="role" class="fadeIn third" name="Role" value=${role}>
       <input type="text" id="personOfContact" class="fadeIn third" name="Person of Contact" value=${personOfContact}>
@@ -869,12 +869,59 @@ const editApplication = application => {
 Collapse
 `;
 
-  // const signinBtn = wrapper.querySelector('.signin-btn')
-  // signinBtn.addEventListener('click', () => {
-  //   wrapper.remove()
-  // })
-
   document.body.append(wrapper);
+
+  const editApplicationForm = wrapper.querySelector("#editApplicationForm");
+
+  editApplicationForm.addEventListener("submit", e => {
+    e.preventDefault(),
+      editApplicationOnServer(e)
+        .then(editApplicationOnUI(e))
+        .then(wrapper.remove());
+  });
+};
+
+const editApplicationOnServer = e => {
+  const updatedCompanyName = e.target[0].value;
+  const updatedRole = e.target[1].value;
+  const updatedPersonOfContact = e.target[2].value;
+
+  const applicationId = e.target.dataset.application_id;
+  const applicationsURL = "http://localhost:3000/applications";
+  const applicationURL = `${applicationsURL}/${applicationId}`;
+
+  const options = {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      id: applicationId,
+      company_name: updatedCompanyName,
+      role: updatedRole,
+      person_of_contact: updatedPersonOfContact
+    })
+  };
+
+  return fetch(applicationURL, options).then(response => {
+    if (response.status === 200) {
+      response.json();
+    }
+  });
+};
+
+const editApplicationOnUI = e => {
+  const applicationId = e.target.dataset.application_id;
+  const applicationTableEl = document.querySelector("#applicationsTable")
+    .children[1];
+  const rowToEdit = Array.from(applicationTableEl.children).find(
+    row => row.dataset.application_id === applicationId
+  );
+  const editedCompany = e.target[0].value;
+  const editedRole = e.target[1].value;
+  const editedPersonOfContact = e.target[2].value;
+
+  rowToEdit.children[0].innerText = editedCompany;
+  rowToEdit.children[1].innerText = editedRole;
+  rowToEdit.children[2].innerText = editedPersonOfContact;
 };
 
 const logout = () => {
