@@ -793,8 +793,36 @@ const renderTasks = () => {
       })
     )
     .flat();
+  userTasks.forEach(task => {
+    renderTask(task);
+  });
+};
+
+const renderTask = task => {
   const tasksTableEl = document.querySelector("#tasksTableEl");
-  debugger;
+  const taskEl = document.createElement("tr");
+  taskEl.innerHTML = `
+  <td>
+                              <div class="form-check">
+                                <label class="form-check-label">
+                                  <input class="form-check-input" type="checkbox" value="" checked>
+                                  <span class="form-check-sign">
+                                    <span class="check"></span>
+                                  </span>
+                                </label>
+                              </div>
+                            </td>
+                            <td>${task.name}</td>
+                            <td class="td-actions text-right">
+                              <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                                <i class="material-icons">edit</i>
+                              </button>
+                              <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                <i class="material-icons">close</i>
+                              </button>
+                            </td>
+  `;
+  tasksTableEl.append(taskEl);
 };
 
 const renderNoTasks = user => {
