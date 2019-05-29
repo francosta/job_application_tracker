@@ -10,7 +10,7 @@ end
 User.create(name: "Fran", email: "francisco@fcosta.pt", password: "password", education: "Doctorate", image: "https://drive.google.com/uc?&id=1AM-P8361aVt4cB0Pl9jJs7nHQCJAUZdv")
 User.create(name: "Endy", email: "endyranaudo@gmail.pt", password: "password", education: "First Grade")
 
-30.times do
+100.times do
     Application.create(company_name: Faker::Company.name, person_of_contact: Faker::Name.unique.name, user_id: User.all.sample.id, role: Faker::Job.title)
 end
 

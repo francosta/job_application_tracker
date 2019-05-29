@@ -771,7 +771,7 @@ function debounce(func, wait, immediate) {
 }
 
 //By us
-let currentUserId = 140;
+let currentUserId = 142;
 let user = [];
 
 function getUser() {
@@ -816,6 +816,15 @@ const renderApplication = application => {
   const applicationCompanyEl = document.createElement("td");
   const applicationRoleEl = document.createElement("td");
   const applicationPersonOfContactEl = document.createElement("td");
+  const applicationButtons = document.createElement("td");
+  applicationButtons.className = "td-actions text-right";
+  applicationButtons.innerHTML = `
+    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+      <i class="material-icons">edit</i>
+    </button>
+    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+      <i class="material-icons">close</i>
+    </button>`;
 
   applicationCompanyEl.innerText = application.company_name;
   applicationRoleEl.innerText = application.role;
@@ -824,7 +833,8 @@ const renderApplication = application => {
   applicationEl.append(
     applicationCompanyEl,
     applicationRoleEl,
-    applicationPersonOfContactEl
+    applicationPersonOfContactEl,
+    applicationButtons
   );
   applicationTableEl.append(applicationEl);
 };
@@ -841,12 +851,36 @@ const logout = () => {
     if (response.status === 200) {
       response.json();
       currentUserId = null;
-      window.location.replace("./login.html");
+      showLoginModal();
+      // window.location.replace("./login.html");
     } else {
       MessageEvent(response.json());
     }
   });
 };
+
+function showLoginModal() {
+  console.log('showLoginModal')
+  const wrapper = document.createElement("div");
+  wrapper.className = "modal-wrapper";
+
+  wrapper.innerHTML = `
+    <div class='my-modal'>
+      <form>
+        <input placeholder='name' />
+        <input placeholder='password' />
+        <button class='signin-btn'>DO THE THING</button>
+      </form>
+    </div>
+  `
+
+  const signinBtn = wrapper.querySelector('.signin-btn')
+  signinBtn.addEventListener('click', () => {
+    wrapper.remove()
+  })
+
+  document.body.append(wrapper)
+}
 
 const initDashboard = () => {
   getUser().then(resp => {

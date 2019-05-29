@@ -65,10 +65,10 @@ const login = () => {
   return fetch(SESSIONS_URL, options).then(response => {
     if (response.status === 200) {
       response.json().then(id => {
-        (currentUserId = id)
-        debugger
+        currentUserId = id;
+        // debugger;
       });
-      window.location.replace("./index.html");
+      // window.location.replace("./index.html");
     } else {
       shakeModal();
     }
