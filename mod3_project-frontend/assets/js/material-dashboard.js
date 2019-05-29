@@ -171,7 +171,7 @@ md = {
     }
   },
 
-  showNotification: function(from, align) {
+  showNotification: function(from, align, notification) {
     type = ["", "info", "danger", "success", "warning", "rose", "primary"];
 
     color = Math.floor(Math.random() * 6 + 1);
@@ -179,8 +179,7 @@ md = {
     $.notify(
       {
         icon: "add_alert",
-        message:
-          "Welcome to <b>Material Dashboard Pro</b> - a beautiful admin panel for every web developer."
+        message: notification
       },
       {
         type: type[color],
@@ -906,7 +905,6 @@ const editApplication = application => {
     </form>
   </div>
 </div>
-Collapse
 `;
 
   document.body.append(outerForm);
@@ -917,7 +915,10 @@ Collapse
     e.preventDefault();
     editApplicationOnServer(e)
       .then(editApplicationOnUI(e))
-      .then(outerForm.remove());
+      .then(outerForm.remove())
+      .then(
+        md.showNotification("top", "left", "Your application has beed edited!")
+      );
   });
 };
 
@@ -1040,6 +1041,7 @@ const login = () => {
         loadDashboard();
       });
       document.querySelector(".modal-wrapper").remove();
+      md.showNotification("top", "center", "You have successfully logged in.");
     } else {
       shakeModal();
     }

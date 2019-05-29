@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_28_150518) do
+ActiveRecord::Schema.define(version: 2019_05_29_164531) do
 
   create_table "applications", force: :cascade do |t|
     t.string "person_of_contact"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 2019_05_28_150518) do
     t.integer "application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "status"
     t.index ["application_id"], name: "index_tasks_on_application_id"
   end
 
