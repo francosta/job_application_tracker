@@ -1,4 +1,4 @@
-const formEl = document.querySelector("form");
+const formLoginEl = document.querySelector("form");
 let currentUserId = null;
 
 // From the template
@@ -54,8 +54,8 @@ function shakeModal() {
 
 //Done by us
 const login = () => {
-  const userEmail = formEl.querySelector("#email").value;
-  const userPassword = formEl.querySelector("#password").value;
+  const userEmail = formLoginEl.querySelector("#email").value;
+  const userPassword = formLoginEl.querySelector("#password").value;
   const SESSIONS_URL = "http://localhost:3000/sessions";
   const options = {
     method: "POST",
@@ -76,7 +76,7 @@ const login = () => {
 };
 
 const listenToForm = () => {
-  formEl.addEventListener("submit", e => {
+  formLoginEl.addEventListener("submit", e => {
     e.preventDefault(), login();
   });
 };

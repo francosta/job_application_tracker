@@ -771,16 +771,13 @@ function debounce(func, wait, immediate) {
 }
 
 //By us
-let currentUserId = 142;
+let currentUserId = null;
 let user = [];
 
 function getUser() {
   const userURL = `http://localhost:3000/users/${currentUserId}`;
   return fetch(userURL).then(resp => resp.json());
 }
-
-// const ongoingApplications = document.getElementById("ongoing-applications")
-// ongoingApplications.innerText = "TEST ONGOING"
 
 const renderOngoingApplications = user => {
   const ongoingApplications = document.getElementById("ongoing-applications");
@@ -859,43 +856,95 @@ const logout = () => {
   });
 };
 
-function showLoginModal() {
-  console.log('showLoginModal')
+const showLoginModal = () => {
+
   const wrapper = document.createElement("div");
   wrapper.className = "modal-wrapper";
 
   wrapper.innerHTML = `
-    <div class='my-modal'>
-      <form>
-        <input placeholder='name' />
-        <input placeholder='password' />
-        <button class='signin-btn'>DO THE THING</button>
-      </form>
+  <div class="fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
     </div>
-  `
+    <!-- Login Form -->
+    <form id="loginForm" >
+      <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
+      <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+      <input type="submit" class="fadeIn fourth" value="Log In">
+    </form>
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      <a class="underlineHover" href="#">Forgot Password?</a>
+    </div>
+  </div>
+</div>
+Collapse
+`
 
-  const signinBtn = wrapper.querySelector('.signin-btn')
-  signinBtn.addEventListener('click', () => {
-    wrapper.remove()
-  })
+  // const signinBtn = wrapper.querySelector('.signin-btn')
+  // signinBtn.addEventListener('click', () => {
+  //   wrapper.remove()
+  // })
 
   document.body.append(wrapper)
 }
 
-const initDashboard = () => {
+const listenToForm = () => {
+
+  loginForm.addEventListener("submit", e => {
+    e.preventDefault(), login();
+  });
+};
+
+const login = () => {
+  const userEmail = loginForm.querySelector("#login").value;
+  const userPassword = loginForm.querySelector("#password").value;
+  const SESSIONS_URL = "http://localhost:3000/sessions";
+  const options = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email: userEmail, password: userPassword })
+  };
+  return fetch(SESSIONS_URL, options).then(response => {
+    if (response.status === 200) {
+      response.json().then(id => {
+        currentUserId = id;
+        loadDashboard()
+      });
+      document.querySelector(".modal-wrapper").remove()
+    } else {
+      shakeModal();
+    }
+  });
+};
+
+const init = () => {
+
+  if (currentUserId === null) {
+    showLoginModal()
+    const loginForm = document.querySelector("#loginForm")
+    listenToForm()
+  } else {
   getUser().then(resp => {
     user = resp;
     renderOngoingApplications(user);
     renderNoTasks(user);
     renderApplications();
   });
-};
-initDashboard();
-
-{
-  /* <tr>
-                        <td>Philip Chaney</td>
-                        <td>$38,735</td>
-                        <td>Korea, South</td>
-                      </tr> */
 }
+};
+
+const loadDashboard = () => {
+  getUser().then(resp => {
+    user = resp;
+    renderOngoingApplications(user);
+    renderNoTasks(user);
+    renderApplications();
+})
+}
+
+init();
+

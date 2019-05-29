@@ -15,15 +15,6 @@
 
 /*     brand Colors              */
 
-.my-modal {
-  width: 200px;
-  height: 100px;
-  background: white;
-  z-index: 100000;
-  padding: 20px;
-  border-radius: 10px;
-}
-
 .modal-wrapper {
   position: absolute;
   top: 0;
@@ -34,8 +25,7 @@
   align-items: center;
   justify-content: center;
   background: #00000150;
-  z-index: 100;
-  filter: blur(3px);
+  z-index: 10;
 }
 
 .card {
