@@ -845,10 +845,10 @@ const editApplication = application => {
   const role = application.role;
   const personOfContact = application.person_of_contact;
 
-  const wrapper = document.createElement("div");
-  wrapper.className = "modal-wrapper";
+  const outerForm = document.createElement("div");
+  outerForm.className = "modal-wrapper";
 
-  wrapper.innerHTML = `
+  outerForm.innerHTML = `
   <div class="fadeInDown">
   <div id="formContent">
     <!-- Tabs Titles -->
@@ -869,15 +869,15 @@ const editApplication = application => {
 Collapse
 `;
 
-  document.body.append(wrapper);
+  document.body.append(outerForm);
 
-  const editApplicationForm = wrapper.querySelector("#editApplicationForm");
+  const editApplicationForm = outerForm.querySelector("#editApplicationForm");
 
   editApplicationForm.addEventListener("submit", e => {
-    e.preventDefault(),
-      editApplicationOnServer(e)
-        .then(editApplicationOnUI(e))
-        .then(wrapper.remove());
+    e.preventDefault();
+    editApplicationOnServer(e)
+      .then(editApplicationOnUI(e))
+      .then(outerForm.remove());
   });
 };
 
