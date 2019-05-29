@@ -810,18 +810,22 @@ const renderApplication = application => {
   const applicationTableEl = document.querySelector("#applicationsTable")
     .children[1];
   const applicationEl = document.createElement("tr");
+  applicationEl.dataset.application_id = application.id;
   const applicationCompanyEl = document.createElement("td");
   const applicationRoleEl = document.createElement("td");
   const applicationPersonOfContactEl = document.createElement("td");
   const applicationButtons = document.createElement("td");
   applicationButtons.className = "td-actions text-right";
   applicationButtons.innerHTML = `
-    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+    <button type="button" id="edit" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
       <i class="material-icons">edit</i>
-    </button>
-    <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-      <i class="material-icons">close</i>
     </button>`;
+
+  const editApplicationButton = applicationButtons.querySelector("#edit");
+
+  editApplicationButton.addEventListener("click", () => {
+    editApplication(application);
+  });
 
   applicationCompanyEl.innerText = application.company_name;
   applicationRoleEl.innerText = application.role;
@@ -834,6 +838,43 @@ const renderApplication = application => {
     applicationButtons
   );
   applicationTableEl.append(applicationEl);
+};
+
+const editApplication = application => {
+  const companyName = application.company_name;
+  const role = application.role;
+  const personOfContact = application.person_of_contact;
+
+  const wrapper = document.createElement("div");
+  wrapper.className = "modal-wrapper";
+
+  wrapper.innerHTML = `
+  <div class="fadeInDown">
+  <div id="formContent">
+    <!-- Tabs Titles -->
+    <!-- Icon -->
+    <div class="fadeIn first">
+      <h3> Edit Application </h3>
+      <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="" />
+    </div>
+    <!-- Edit Application Form -->
+    <form id="editApplicationForm" >
+      <input type="text" id="companyName" class="fadeIn second" name="Company Name" value=${companyName}>
+      <input type="text" id="role" class="fadeIn third" name="Role" value=${role}>
+      <input type="text" id="personOfContact" class="fadeIn third" name="Person of Contact" value=${personOfContact}>
+      <input type="submit" class="fadeIn fourth" value="Edit Application">
+    </form>
+  </div>
+</div>
+Collapse
+`;
+
+  // const signinBtn = wrapper.querySelector('.signin-btn')
+  // signinBtn.addEventListener('click', () => {
+  //   wrapper.remove()
+  // })
+
+  document.body.append(wrapper);
 };
 
 const logout = () => {
@@ -857,7 +898,6 @@ const logout = () => {
 };
 
 const showLoginModal = () => {
-
   const wrapper = document.createElement("div");
   wrapper.className = "modal-wrapper";
 
@@ -872,7 +912,7 @@ const showLoginModal = () => {
     <!-- Login Form -->
     <form id="loginForm" >
       <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-      <input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+      <input type="password" id="password" class="fadeIn third" name="login" placeholder="password">
       <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
     <!-- Remind Passowrd -->
@@ -882,18 +922,17 @@ const showLoginModal = () => {
   </div>
 </div>
 Collapse
-`
+`;
 
   // const signinBtn = wrapper.querySelector('.signin-btn')
   // signinBtn.addEventListener('click', () => {
   //   wrapper.remove()
   // })
 
-  document.body.append(wrapper)
-}
+  document.body.append(wrapper);
+};
 
 const listenToForm = () => {
-
   loginForm.addEventListener("submit", e => {
     e.preventDefault(), login();
   });
@@ -912,9 +951,9 @@ const login = () => {
     if (response.status === 200) {
       response.json().then(id => {
         currentUserId = id;
-        loadDashboard()
+        loadDashboard();
       });
-      document.querySelector(".modal-wrapper").remove()
+      document.querySelector(".modal-wrapper").remove();
     } else {
       shakeModal();
     }
@@ -922,19 +961,18 @@ const login = () => {
 };
 
 const init = () => {
-
   if (currentUserId === null) {
-    showLoginModal()
-    const loginForm = document.querySelector("#loginForm")
-    listenToForm()
+    showLoginModal();
+    const loginForm = document.querySelector("#loginForm");
+    listenToForm();
   } else {
-  getUser().then(resp => {
-    user = resp;
-    renderOngoingApplications(user);
-    renderNoTasks(user);
-    renderApplications();
-  });
-}
+    getUser().then(resp => {
+      user = resp;
+      renderOngoingApplications(user);
+      renderNoTasks(user);
+      renderApplications();
+    });
+  }
 };
 
 const loadDashboard = () => {
@@ -943,8 +981,7 @@ const loadDashboard = () => {
     renderOngoingApplications(user);
     renderNoTasks(user);
     renderApplications();
-})
-}
+  });
+};
 
 init();
-
