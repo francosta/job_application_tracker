@@ -1,21 +1,15 @@
 /*!
-
  =========================================================
  * Material Dashboard - v2.1.1
  =========================================================
-
  * Product Page: https://www.creative-tim.com/product/material-dashboard
  * Copyright 2018 Creative Tim (http://www.creative-tim.com)
-
  * Designed by www.invisionapp.com Coded by www.creative-tim.com
-
  =========================================================
-
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
  */
-
 // From the template
+
 (function() {
   isWindows = navigator.platform.indexOf("Win") > -1 ? true : false;
 
@@ -853,9 +847,8 @@ const editApplication = application => {
   <div id="formContent">
     <!-- Tabs Titles -->
     <!-- Icon -->
-    <div class="fadeIn first">
+    <div class="fadeIn first formHeader">
       <h3> Edit Application </h3>
-      <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="" />
     </div>
     <!-- Edit Application Form -->
     <form id="editApplicationForm" >
@@ -897,6 +890,7 @@ const logout = () => {
   });
 };
 
+//LOGIN
 const showLoginModal = () => {
   const wrapper = document.createElement("div");
   wrapper.className = "modal-wrapper";
@@ -906,19 +900,16 @@ const showLoginModal = () => {
   <div id="formContent">
     <!-- Tabs Titles -->
     <!-- Icon -->
-    <div class="fadeIn first">
-      <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
+    <div class="fadeIn first formHeader">
+      Please enter your email and password <br>
+      to log-in
     </div>
     <!-- Login Form -->
     <form id="loginForm" >
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-      <input type="password" id="password" class="fadeIn third" name="login" placeholder="password">
+      <input type="text" id="login" class="fadeIn second" name="login" placeholder="enter your email">
+      <input type="password" id="password" class="fadeIn third" name="login" placeholder="enter your password">
       <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
-    <!-- Remind Passowrd -->
-    <div id="formFooter">
-      <a class="underlineHover" href="#">Forgot Password?</a>
-    </div>
   </div>
 </div>
 Collapse
