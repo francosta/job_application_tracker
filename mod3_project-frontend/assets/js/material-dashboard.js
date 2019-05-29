@@ -771,7 +771,8 @@ function debounce(func, wait, immediate) {
 }
 
 //By us
-let currentUserId = 140;
+// let currentUserId = 13;
+let user = []
 
 function getUser() {
   const userURL = `http://localhost:3000/users/${currentUserId}`;
@@ -781,9 +782,21 @@ function getUser() {
 // const ongoingApplications = document.getElementById("ongoing-applications")
 // ongoingApplications.innerText = "TEST ONGOING"
 
-function renderOngoingApplications(users) {
+const renderOngoingApplications = (user) => {
   const ongoingApplications = document.getElementById("ongoing-applications");
+  const numberOfApplications = user.applications.length
+  ongoingApplications.innerText = numberOfApplications
 }
+
+const renderNoTasks = (user) => {
+  const tasksDueEl = document.getElementById("TasksDue");
+  const userApplications = user.applications
+  const userTasks = (userApplications) => {userApplications.map(application => application.tasks)}
+  
+};
+
+  // const numberOfTasksDues = user.tasks.length
+  // tasksDue.innerText = numberOfTasksDues
 
 const logout = () => {
   const id = currentUserId;
@@ -803,3 +816,12 @@ const logout = () => {
     }
   });
 };
+
+const initDashboard = () => {
+  getUser().then(resp => {
+    user = resp
+    renderOngoingApplications(user)
+    // renderNoTasks(user)
+  })
+}
+initDashboard()
