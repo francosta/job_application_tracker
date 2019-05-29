@@ -864,14 +864,17 @@ const editApplication = application => {
   <div id="formContent">
     <!-- Tabs Titles -->
     <!-- Icon -->
-    <div class="fadeIn first">
+    <div class="fadeIn first formHeader">
       <h3> Edit Application </h3>
       <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="" />
     </div>
     <!-- Edit Application Form -->
     <form id="editApplicationForm" data-application_id="${application.id}">
+      <label for="companyName">Company Name</label>
       <input type="text" id="companyName" class="fadeIn second" name="Company Name" value=${companyName}>
+      <label for="role">Role</label>
       <input type="text" id="role" class="fadeIn third" name="Role" value=${role}>
+      <label for="personOfContact">Person of Contact</label>
       <input type="text" id="personOfContact" class="fadeIn third" name="Person of Contact" value=${personOfContact}>
       <input type="submit" class="fadeIn fourth" value="Edit Application">
     </form>
@@ -963,8 +966,9 @@ const showLoginModal = () => {
   <div id="formContent">
     <!-- Tabs Titles -->
     <!-- Icon -->
-    <div class="fadeIn first">
-      <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />
+    <div class="fadeIn first formHeader">
+    <div>Please enter your email and password 
+    to log-in</div>
     </div>
     <!-- Login Form -->
     <form id="loginForm" >
@@ -973,8 +977,8 @@ const showLoginModal = () => {
       <input type="submit" class="fadeIn fourth" value="Log In">
     </form>
     <!-- Remind Passowrd -->
-    <div id="formFooter">
-      <a class="underlineHover" href="#">Forgot Password?</a>
+    <div id="formFooter" class="createAccount"> You don't have an account?<br>
+      <a class="underlineHover" href="#" > Create your account </a>
     </div>
   </div>
 </div>

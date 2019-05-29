@@ -32,6 +32,12 @@ body {
   padding: 30px;
 }
 
+.createAccount{
+  padding-top: 0;
+  padding-bottom: 30px;
+  margin-top: 0;
+}
+
 #formContent {
   -webkit-border-radius: 10px 10px 10px 10px;
   border-radius: 10px 10px 10px 10px;
