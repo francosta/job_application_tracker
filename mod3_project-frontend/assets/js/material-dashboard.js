@@ -855,6 +855,7 @@ const editApplication = application => {
   const companyName = application.company_name;
   const role = application.role;
   const personOfContact = application.person_of_contact;
+  const closeButton = document.getElementById("closeEdit")
 
   const outerForm = document.createElement("div");
   outerForm.className = "modal-wrapper";
@@ -865,13 +866,14 @@ const editApplication = application => {
     <!-- Tabs Titles -->
     <!-- Icon -->
     <div class="fadeIn first formHeader">
+      <div id="closeEdit">X</div>
       <h3> Edit Application </h3>
     </div>
     <!-- Edit Application Form -->
     <form id="editApplicationForm" data-application_id="${application.id}">
       <label for="companyName">Company Name</label>
       <input type="text" id="companyName" class="fadeIn second" name="Company Name" value=${companyName}>
-      <label for="role">Role</label>
+      <label for="role">Your role</label>
       <input type="text" id="role" class="fadeIn third" name="Role" value=${role}>
       <label for="personOfContact">Person of Contact</label>
       <input type="text" id="personOfContact" class="fadeIn third" name="Person of Contact" value=${personOfContact}>
@@ -879,8 +881,9 @@ const editApplication = application => {
     </form>
   </div>
 </div>
-Collapse
 `;
+
+  // closeButton.addEventListener("click", () => console.log("YOYOYO"))
 
   document.body.append(outerForm);
 
@@ -980,7 +983,6 @@ const showLoginModal = () => {
     </div>
   </div>
 </div>
-Collapse
 `;
 
   // const signinBtn = wrapper.querySelector('.signin-btn')

@@ -44,7 +44,7 @@ body {
   background: #fff;
   padding: 30px;
   width: 90%;
-  max-width: 450px;
+  max-width: 480px;
   position: relative;
   padding: 0px;
   -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
@@ -278,6 +278,14 @@ input[type=text]:placeholder {
   overflow: hidden;
 }
 
+#closeEdit{
+  /* margin: 30px; */
+  padding-bottom: 30px;
+  text-align: right;
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #DD5C54;
+}
 
 /* #formContent {
   display: flex;
@@ -287,6 +295,15 @@ input[type=text]:placeholder {
   width: 300px;
 } */
 
+/* MODAL BLUR */
+body.modal-open .supreme-container{
+  -webkit-filter: blur(1px);
+  -moz-filter: blur(1px);
+  -o-filter: blur(1px);
+  -ms-filter: blur(1px);
+  filter: blur(1px);
+}
+/* ####### */
 
 .card {
   font-size: .875rem;
