@@ -1019,6 +1019,13 @@ Collapse
   document.body.append(wrapper);
 };
 
+const showProfileModal = () => {
+  const profileModalName = document.querySelector("#profileModalName");
+  const profileModalPicture = document.querySelector("#profileModalPicture");
+  profileModalName.value = user.name;
+  profileModalPicture.src = user.image;
+};
+
 const listenToForm = () => {
   loginForm.addEventListener("submit", e => {
     e.preventDefault(), login();
