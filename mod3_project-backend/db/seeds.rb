@@ -8,14 +8,14 @@ Application.destroy_all
 end
 
 User.create(name: "Fran", email: "francisco@fcosta.pt", password: "password", education: "Doctorate", image: "https://drive.google.com/uc?&id=1AM-P8361aVt4cB0Pl9jJs7nHQCJAUZdv")
-User.create(name: "Endy", email: "endyranaudo@gmail.pt", password: "password", education: "First Grade")
+User.create(name: "Endy", email: "endyranaudo@gmail.com", password: "password", education: "First Grade")
 
 100.times do
     Application.create(company_name: Faker::Company.name, person_of_contact: Faker::Name.unique.name, user_id: User.all.sample.id, role: Faker::Job.title)
 end
 
 50.times do
-    Task.create(name: Faker::Lorem.sentence, deadline: Faker::Date.forward(23), application_id: Application.all.sample.id)
+    Task.create(name: Faker::Lorem.sentence, deadline: Faker::Date.forward(23), application_id: Application.all.sample.id, status: Faker::Boolean.boolean)
 end
 
 15.times do

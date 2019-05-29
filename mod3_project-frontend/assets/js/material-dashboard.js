@@ -171,7 +171,7 @@ md = {
     }
   },
 
-  showNotification: function(from, align) {
+  showNotification: function(from, align, notification) {
     type = ["", "info", "danger", "success", "warning", "rose", "primary"];
 
     color = Math.floor(Math.random() * 6 + 1);
@@ -179,8 +179,7 @@ md = {
     $.notify(
       {
         icon: "add_alert",
-        message:
-          "Welcome to <b>Material Dashboard Pro</b> - a beautiful admin panel for every web developer."
+        message: notification
       },
       {
         type: type[color],
@@ -779,22 +778,51 @@ function getUser() {
   return fetch(userURL).then(resp => resp.json());
 }
 
-const renderOngoingApplications = user => {
+const renderNoOngoingApplications = user => {
   const ongoingApplications = document.getElementById("ongoing-applications");
   const numberOfApplications = user.applications.length;
   ongoingApplications.innerText = numberOfApplications;
 };
 
-// const renderTasks = user => {
-//   const userTasks = user.applications
-//     .map(application =>
-//       application.tasks.map(task => {
-//         return task;
-//       })
-//     )
-//     .flat();
-//   console.log(userTasks);
-// };
+const renderTasks = () => {
+  const userTasks = user.applications
+    .map(application =>
+      application.tasks.map(task => {
+        return task;
+      })
+    )
+    .flat();
+  userTasks.forEach(task => {
+    renderTask(task);
+  });
+};
+
+const renderTask = task => {
+  const tasksTableEl = document.querySelector("#tasksTableEl");
+  const taskEl = document.createElement("tr");
+  taskEl.innerHTML = `
+  <td>
+                              <div class="form-check">
+                                <label class="form-check-label">
+                                  <input class="form-check-input" type="checkbox" value="" checked>
+                                  <span class="form-check-sign">
+                                    <span class="check"></span>
+                                  </span>
+                                </label>
+                              </div>
+                            </td>
+                            <td>${task.name}</td>
+                            <td class="td-actions text-right">
+                              <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                                <i class="material-icons">edit</i>
+                              </button>
+                              <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                <i class="material-icons">close</i>
+                              </button>
+                            </td>
+  `;
+  tasksTableEl.append(taskEl);
+};
 
 const renderNoTasks = user => {
   const tasksDueEl = document.getElementById("TasksDue");
@@ -893,7 +921,10 @@ const editApplication = application => {
     e.preventDefault();
     editApplicationOnServer(e)
       .then(editApplicationOnUI(e))
-      .then(outerForm.remove());
+      .then(outerForm.remove())
+      .then(
+        md.showNotification("top", "left", "Your application has beed edited!")
+      );
   });
 };
 
@@ -993,6 +1024,13 @@ const showLoginModal = () => {
   document.body.append(wrapper);
 };
 
+const showProfileModal = () => {
+  const profileModalName = document.querySelector("#profileModalName");
+  const profileModalPicture = document.querySelector("#profileModalPicture");
+  profileModalName.value = user.name;
+  profileModalPicture.src = user.image;
+};
+
 const listenToForm = () => {
   loginForm.addEventListener("submit", e => {
     e.preventDefault(), login();
@@ -1015,6 +1053,7 @@ const login = () => {
         loadDashboard();
       });
       document.querySelector(".modal-wrapper").remove();
+      md.showNotification("top", "center", "You have successfully logged in.");
     } else {
       shakeModal();
     }
@@ -1039,9 +1078,10 @@ const init = () => {
 const loadDashboard = () => {
   getUser().then(resp => {
     user = resp;
-    renderOngoingApplications(user);
+    renderNoOngoingApplications(user);
     renderNoTasks(user);
     renderApplications();
+    renderTasks();
   });
 };
 
