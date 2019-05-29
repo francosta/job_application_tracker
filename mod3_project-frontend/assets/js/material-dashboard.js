@@ -866,7 +866,6 @@ const editApplication = application => {
     <!-- Icon -->
     <div class="fadeIn first formHeader">
       <h3> Edit Application </h3>
-      <img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="" />
     </div>
     <!-- Edit Application Form -->
     <form id="editApplicationForm" data-application_id="${application.id}">
@@ -967,8 +966,7 @@ const showLoginModal = () => {
     <!-- Tabs Titles -->
     <!-- Icon -->
     <div class="fadeIn first formHeader">
-    <div>Please enter your email and password 
-    to log-in</div>
+    <div>Please enter your email and password to log-in</div>
     </div>
     <!-- Login Form -->
     <form id="loginForm" >
