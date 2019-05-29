@@ -771,8 +771,8 @@ function debounce(func, wait, immediate) {
 }
 
 //By us
-// let currentUserId = 13;
-let user = []
+let currentUserId = 140;
+let user = [];
 
 function getUser() {
   const userURL = `http://localhost:3000/users/${currentUserId}`;
@@ -782,21 +782,52 @@ function getUser() {
 // const ongoingApplications = document.getElementById("ongoing-applications")
 // ongoingApplications.innerText = "TEST ONGOING"
 
-const renderOngoingApplications = (user) => {
+const renderOngoingApplications = user => {
   const ongoingApplications = document.getElementById("ongoing-applications");
-  const numberOfApplications = user.applications.length
-  ongoingApplications.innerText = numberOfApplications
-}
-
-const renderNoTasks = (user) => {
-  const tasksDueEl = document.getElementById("TasksDue");
-  const userApplications = user.applications
-  const userTasks = (userApplications) => {userApplications.map(application => application.tasks)}
-  
+  const numberOfApplications = user.applications.length;
+  ongoingApplications.innerText = numberOfApplications;
 };
 
-  // const numberOfTasksDues = user.tasks.length
-  // tasksDue.innerText = numberOfTasksDues
+const renderNoTasks = user => {
+  const tasksDueEl = document.getElementById("TasksDue");
+  const userApplications = user.applications;
+  const userTasks = user.applications
+    .map(application =>
+      application.tasks.map(task => {
+        return task;
+      })
+    )
+    .flat();
+  const noTasksDue = userTasks.length;
+  tasksDueEl.innerText = noTasksDue;
+};
+
+const renderApplications = () => {
+  const userApplications = user.applications;
+  userApplications.forEach(application => {
+    renderApplication(application);
+  });
+};
+
+const renderApplication = application => {
+  const applicationTableEl = document.querySelector("#applicationsTable")
+    .children[1];
+  const applicationEl = document.createElement("tr");
+  const applicationCompanyEl = document.createElement("td");
+  const applicationRoleEl = document.createElement("td");
+  const applicationPersonOfContactEl = document.createElement("td");
+
+  applicationCompanyEl.innerText = application.company_name;
+  applicationRoleEl.innerText = application.role;
+  applicationPersonOfContactEl.innerText = application.person_of_contact;
+
+  applicationEl.append(
+    applicationCompanyEl,
+    applicationRoleEl,
+    applicationPersonOfContactEl
+  );
+  applicationTableEl.append(applicationEl);
+};
 
 const logout = () => {
   const id = currentUserId;
@@ -819,9 +850,18 @@ const logout = () => {
 
 const initDashboard = () => {
   getUser().then(resp => {
-    user = resp
-    renderOngoingApplications(user)
-    // renderNoTasks(user)
-  })
+    user = resp;
+    renderOngoingApplications(user);
+    renderNoTasks(user);
+    renderApplications();
+  });
+};
+initDashboard();
+
+{
+  /* <tr>
+                        <td>Philip Chaney</td>
+                        <td>$38,735</td>
+                        <td>Korea, South</td>
+                      </tr> */
 }
-initDashboard()
