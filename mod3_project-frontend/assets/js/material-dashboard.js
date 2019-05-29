@@ -883,7 +883,7 @@ const editApplication = application => {
   const companyName = application.company_name;
   const role = application.role;
   const personOfContact = application.person_of_contact;
-  const closeButton = document.getElementById("closeEdit")
+  const closeButton = document.getElementById("closeEdit");
 
   const outerForm = document.createElement("div");
   outerForm.className = "modal-wrapper";
@@ -1025,6 +1025,7 @@ const showLoginModal = () => {
 };
 
 const showProfileModal = () => {
+  $("#profileModal").modal();
   const profileModalName = document.querySelector("#profileModalName");
   const profileModalPicture = document.querySelector("#profileModalPicture");
   profileModalName.value = user.name;
@@ -1055,7 +1056,11 @@ const login = () => {
       document.querySelector(".modal-wrapper").remove();
       md.showNotification("top", "center", "You have successfully logged in.");
     } else {
-      shakeModal();
+      md.showNotification(
+        "top",
+        "left",
+        "Your password or email are incorect!"
+      );
     }
   });
 };
