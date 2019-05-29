@@ -10,4 +10,18 @@ class UsersController < ApplicationController
         render json: UserSerializer.new(@user).to_serialized_hash
     end
 
+    def update
+        user = User.find_by(id: user_params[:id])
+        if user
+            user.update(user_params)
+            render json: user
+        end
+    end
+
+    private
+
+    def user_params
+        params.require(:user).permit(:id, :name, :education, :email)
+    end
+
 end

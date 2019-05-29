@@ -911,8 +911,6 @@ const editApplication = application => {
 </div>
 `;
 
-  // closeButton.addEventListener("click", () => console.log("YOYOYO"))
-
   document.body.append(outerForm);
 
   const editApplicationForm = outerForm.querySelector("#editApplicationForm");
@@ -969,6 +967,55 @@ const editApplicationOnUI = e => {
   rowToEdit.children[0].innerText = editedCompany;
   rowToEdit.children[1].innerText = editedRole;
   rowToEdit.children[2].innerText = editedPersonOfContact;
+};
+
+const editProfile = () => {
+  const editedName = document.querySelector("#profileModalName").value;
+  const editedEducation = document.querySelector("#profileModalEducation")
+    .value;
+  const editedEmail = document.querySelector("#profileModalEmail").value;
+
+  editProfileOnServer(editedName, editedEducation, editedEmail).then(
+    $("#profileModal").modal("hide")
+  );
+  editProfileOnUI(editedName, editedEducation, editedEmail);
+};
+
+const editProfileOnServer = (editedName, editedEducation, editedEmail) => {
+  const usersURL = "http://localhost:3000/users";
+  const userURL = `${usersURL}/${currentUserId}`;
+  const options = {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      id: currentUserId,
+      name: editedName,
+      education: editedEducation,
+      email: editedEmail
+    })
+  };
+
+  return fetch(userURL, options).then(response => {
+    if (response.status === 200) {
+      response
+        .json()
+        .then(
+          md.showNotification("top", "left", "Your profile has been edited.")
+        );
+    } else {
+      md.showNotification(
+        "top",
+        "left",
+        "Something is wrong. Please try again later."
+      );
+    }
+  });
+};
+
+const editProfileOnUI = (editedName, editedEducation, editedEmail) => {
+  user.name = editedName;
+  user.education = editedEducation;
+  user.email = editedEmail;
 };
 
 const logout = () => {
@@ -1028,8 +1075,14 @@ const showProfileModal = () => {
   $("#profileModal").modal();
   const profileModalName = document.querySelector("#profileModalName");
   const profileModalPicture = document.querySelector("#profileModalPicture");
+  const profileModalEmail = document.querySelector("#profileModalEmail");
+  const profileModalNameH4 = document.querySelector("#profileModalNameh4");
+
   profileModalName.value = user.name;
   profileModalPicture.src = user.image;
+  profileModalEmail.value = user.email;
+  profileModalEducation.value = user.education;
+  profileModalNameH4.innerText = user.name;
 };
 
 const listenToForm = () => {
