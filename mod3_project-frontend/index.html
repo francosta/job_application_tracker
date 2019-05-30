@@ -850,6 +850,31 @@
     </div>
   </div>
 
+  <!-- Create New Application Modal --> 
+  <div class="modal" id="createNewApplicationModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title fadeIn first formHeader">Edit Application</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="createNewApplicationForm" class="container">
+            <label for="editModalCompany">Company Name</label>
+            <input type="text" id="editModalCompany" class="fadeIn second" name="Company Name" value=${companyName}>
+            <label for="editModalRole">Your role</label>
+            <input type="text" id="editModalRole" class="fadeIn third" name="Role" value=${role}>
+            <label for="editModalPOC">Person of Contact</label>
+            <input type="text" id="editModalPOC" class="fadeIn third" name="Person of Contact" value=${personOfContact}>
+            <input type="submit" class="fadeIn fourth" value="Edit Application">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 
 </html>
