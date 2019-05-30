@@ -104,11 +104,11 @@ input[type=button], input[type=submit], input[type=reset]  {
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
   margin: 20px 20px 40px 20px;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
 
 input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover  {
@@ -135,11 +135,11 @@ input[type=text], [type=password] {
   margin: 5px;
   width: 85%;
   border: 2px solid #f6f6f6;
-  -webkit-transition: all 0.2s ease-in-out;
-  -moz-transition: all 0.2s ease-in-out;
-  -ms-transition: all 0.2s ease-in-out;
-  -o-transition: all 0.2s ease-in-out;
-  transition: all 0.2s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
 }
@@ -163,8 +163,8 @@ input[type=text]:placeholder {
 .fadeInDown {
   -webkit-animation-name: fadeInDown;
   animation-name: fadeInDown;
-  -webkit-animation-duration: 0.2s;
-  animation-duration: 0.2s;
+  -webkit-animation-duration: 0.4s;
+  animation-duration: 0.4s;
   -webkit-animation-fill-mode: both2
   animation-fill-mode: both;
 }
@@ -209,33 +209,33 @@ input[type=text]:placeholder {
   -moz-animation-fill-mode:forwards;
   animation-fill-mode:forwards;
 
-  -webkit-animation-duration:0.3s;
-  -moz-animation-duration:0.3s;
-  animation-duration:0.3s;
+  -webkit-animation-duration:0.4s;
+  -moz-animation-duration:0.4s;
+  animation-duration:0.4s;
 }
 
 .fadeIn.first {
-  -webkit-animation-delay: 0.2s;
-  -moz-animation-delay: 0.2s;
-  animation-delay: 0.2s;
-}
-
-.fadeIn.second {
   -webkit-animation-delay: 0.3s;
   -moz-animation-delay: 0.3s;
   animation-delay: 0.3s;
 }
 
-.fadeIn.third {
+.fadeIn.second {
   -webkit-animation-delay: 0.4s;
   -moz-animation-delay: 0.4s;
   animation-delay: 0.4s;
 }
 
-.fadeIn.fourth {
+.fadeIn.third {
   -webkit-animation-delay: 0.5s;
   -moz-animation-delay: 0.5s;
   animation-delay: 0.5s;
+}
+
+.fadeIn.fourth {
+  -webkit-animation-delay: 0.6s;
+  -moz-animation-delay: 0.6s;
+  animation-delay: 0.6s;
 }
 
 /* Simple CSS3 Fade-in Animation */
@@ -247,7 +247,7 @@ input[type=text]:placeholder {
   height: 2px;
   background-color: #56baed;
   content: "";
-  transition: width 0.2s;
+  transition: width 0.4s;
 }
 
 .underlineHover:hover {
