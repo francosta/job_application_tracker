@@ -778,12 +778,28 @@ function getUser() {
   return fetch(userURL).then(resp => resp.json());
 }
 
-// #### RENDER ONGOING APPLICATIONS ####
+// SCORECARDS ####
 const renderNoOngoingApplications = user => {
   const ongoingApplications = document.getElementById("ongoing-applications");
   const numberOfApplications = user.applications.length;
   ongoingApplications.innerText = numberOfApplications;
 };
+
+const renderNoTasks = user => {
+  const tasksDueEl = document.getElementById("TasksDue");
+  const userApplications = user.applications;
+  const userTasks = user.applications
+    .map(application =>
+      application.tasks.map(task => {
+        return task;
+      })
+    )
+    .flat();
+  const noTasksDue = userTasks.length;
+  tasksDueEl.innerText = noTasksDue;
+};
+
+// TABLES
 
 // #### RENDER TASKS ####
 const renderTasks = () => {
@@ -836,34 +852,6 @@ const renderDueTask = task => {
   tasksTableEl.append(taskEl);
 };
 
-const editTaskOnServer = (e, task) => {
-  const taskURL = `http://localhost:3000/tasks/${task.id}`;
-
-  if (task.status === true) {
-    task.status = false;
-  } else {
-    task.status = true;
-  }
-
-  const options = {
-    method: "PATCH",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ task })
-  };
-
-  return fetch(taskURL, options).then(resp => resp.json());
-};
-
-const editTaskOnUI = (e, task) => {
-  taskRow = e.target.parentElement.parentElement.parentElement.parentElement;
-  taskRow.remove();
-  if (task.status === false) {
-    renderDueTask(task);
-  } else {
-    renderDoneTask(task);
-  }
-};
-
 const renderDoneTask = task => {
   const tasksTableEl = document.querySelector("#completeTasksTableEl");
   const taskEl = document.createElement("tr");
@@ -898,18 +886,32 @@ const renderDoneTask = task => {
   tasksTableEl.append(taskEl);
 };
 
-const renderNoTasks = user => {
-  const tasksDueEl = document.getElementById("TasksDue");
-  const userApplications = user.applications;
-  const userTasks = user.applications
-    .map(application =>
-      application.tasks.map(task => {
-        return task;
-      })
-    )
-    .flat();
-  const noTasksDue = userTasks.length;
-  tasksDueEl.innerText = noTasksDue;
+const editTaskOnServer = (e, task) => {
+  const taskURL = `http://localhost:3000/tasks/${task.id}`;
+
+  if (task.status === true) {
+    task.status = false;
+  } else {
+    task.status = true;
+  }
+
+  const options = {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ task })
+  };
+
+  return fetch(taskURL, options).then(resp => resp.json());
+};
+
+const editTaskOnUI = (e, task) => {
+  taskRow = e.target.parentElement.parentElement.parentElement.parentElement;
+  taskRow.remove();
+  if (task.status === false) {
+    renderDueTask(task);
+  } else {
+    renderDoneTask(task);
+  }
 };
 
 // #### RENDER APPLICATIONS ####
@@ -978,7 +980,7 @@ const editApplication = application => {
   });
 
   deleteApplicationButton.addEventListener("click", e =>
-    deleteApplicationOnServer(e)
+    deleteApplicationOnServer(e).then(deleteApplicationOnUI(e))
   );
 };
 
@@ -1025,6 +1027,7 @@ const editApplicationOnUI = e => {
   rowToEdit.children[0].innerText = editedCompany;
   rowToEdit.children[1].innerText = editedRole;
   rowToEdit.children[2].innerText = editedPersonOfContact;
+  e.target.reset();
   if (e.type === "submit") {
     md.showNotification("top", "left", "Your application has beed edited!");
   }
@@ -1037,10 +1040,10 @@ const editProfile = () => {
     .value;
   const editedEmail = document.querySelector("#profileModalEmail").value;
 
-  editProfileOnServer(editedName, editedEducation, editedEmail).then(
-    $("#profileModal").modal("hide")
-  );
-  editProfileOnUI(editedName, editedEducation, editedEmail);
+  editProfileOnServer(editedName, editedEducation, editedEmail).then(resp => {
+    editProfileOnUI(editedName, editedEducation, editedEmail);
+    $("#profileModal").modal("hide");
+  });
 };
 
 const editProfileOnServer = (editedName, editedEducation, editedEmail) => {
@@ -1078,6 +1081,7 @@ const editProfileOnUI = (editedName, editedEducation, editedEmail) => {
   user.name = editedName;
   user.education = editedEducation;
   user.email = editedEmail;
+  renderUsernameInNavbar();
 };
 
 // #### RENDER USERNAME IN NAVBAR ####
@@ -1263,11 +1267,7 @@ const deleteApplicationOnServer = e => {
     method: "DELETE"
   };
 
-  return fetch(applicationURL, options)
-    .then(resp => resp.json())
-    .then(resp => {
-      deleteApplicationOnUI(resp);
-    });
+  return fetch(applicationURL, options).then(resp => resp.json());
 };
 
 const deleteApplicationOnUI = response => {
@@ -1314,21 +1314,15 @@ const showFindJobsModal = () => {
 
 const getReedJobs = () => {
   const username = "619968d8-7b27-461f-a1a9-32e1b71faec5";
-  const reedURL =
-    "http://www.reed.co.uk/api/1.0/search?keywords=banking%20banking%20finance&location=london&distancefromlocation=1";
 
-  var settings = {
-    async: true,
-    crossDomain: true,
-    url:
-      "http://www.reed.co.uk/api/1.0/search?keywords=banking%20banking%20finance&location=london&distancefromlocation=1",
-    method: "GET",
-    headers: {
-      Authorization: "Basic 619968d8-7b27-461f-a1a9-32e1b71faec5"
+  return fetch(
+    "https://www.reed.co.uk/api/1.0/search?keywords=banking%20banking%20finance&location=london&distancefromlocation=1",
+    {
+      headers: {
+        authorization: "Basic 619968d8-7b27-461f-a1a9-32e1b71faec5"
+      }
     }
-  };
-
-  return fetch(reedURL, settings).then(resp => console.log(resp.json()));
+  ).then(resp => resp.json());
 };
 
 // #### LOGOUT ####
