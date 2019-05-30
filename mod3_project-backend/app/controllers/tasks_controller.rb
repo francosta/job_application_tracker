@@ -10,10 +10,16 @@ class TasksController < ApplicationController
         render json: TaskSerializer.new(@task).to_serialized_hash
     end
 
+    def update
+        task = Task.find_by(id: params[:id])
+        task.update(task_params)
+        render json: task
+    end
+
     private
 
     def task_params
-        params.permit(:name, :deadline, :id)
+        params.require(:task).permit(:name, :deadline, :id, :status)
     end
 
 end

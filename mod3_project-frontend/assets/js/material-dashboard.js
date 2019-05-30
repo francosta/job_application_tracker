@@ -797,14 +797,19 @@ const renderTasks = () => {
     )
     .flat();
   userTasks.forEach(task => {
-    renderTask(task);
+    if (task.status === false) {
+      renderDueTask(task);
+    } else {
+      renderDoneTask(task);
+    }
   });
 };
 
-const renderTask = task => {
-  const tasksTableEl = document.querySelector("#tasksTableEl");
+const renderDueTask = task => {
+  const tasksTableEl = document.querySelector("#dueTasksTableEl");
   const taskEl = document.createElement("tr");
   taskEl.innerHTML = `
+<<<<<<< HEAD
     <td>
       <div class="form-check">
         <label class="form-check-label">
@@ -825,6 +830,96 @@ const renderTask = task => {
       </button>
     </td>
   `;
+=======
+  <td id=${task.id}>
+                              <div class="form-check">
+                                <label class="form-check-label">
+                                  <input id="completeTaskButton" class="form-check-input" type="checkbox" value="">
+                                  <span class="form-check-sign">
+                                    <span class="check"></span>
+                                  </span>
+                                </label>
+                              </div>
+                            </td>
+                            <td id="taskTableName">${task.name}</td>
+                            <td id="taskTableCompany"></td>
+                            <td id="taskTableDeadline">${task.deadline}</td>
+                            <td class="td-actions text-right">
+                                <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                                  <i class="material-icons">edit</i>
+                                </button>
+                                <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                  <i class="material-icons">close</i>
+                                </button>
+                              </td>`;
+
+  const completeTaskButton = taskEl.querySelector("#completeTaskButton");
+  completeTaskButton.addEventListener("click", e =>
+    editTaskOnServer(e, task).then(editTaskOnUI(e, task))
+  );
+  tasksTableEl.append(taskEl);
+};
+
+const editTaskOnServer = (e, task) => {
+  const taskURL = `http://localhost:3000/tasks/${task.id}`;
+
+  if (task.status === true) {
+    task.status = false;
+  } else {
+    task.status = true;
+  }
+
+  const options = {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ task })
+  };
+
+  return fetch(taskURL, options).then(resp => resp.json());
+};
+
+const editTaskOnUI = (e, task) => {
+  taskRow = e.target.parentElement.parentElement.parentElement.parentElement;
+  taskRow.remove();
+  if (task.status === false) {
+    renderDueTask(task);
+  } else {
+    renderDoneTask(task);
+  }
+};
+
+const renderDoneTask = task => {
+  const tasksTableEl = document.querySelector("#completeTasksTableEl");
+  const taskEl = document.createElement("tr");
+  taskEl.innerHTML = `
+  <td id=${task.id}>
+                              <div class="form-check">
+                                <label class="form-check-label">
+                                  <input id="completeTaskButton" class="form-check-input" type="checkbox" checked="" value="">
+                                  <span class="form-check-sign">
+                                    <span class="check"></span>
+                                  </span>
+                                </label>
+                              </div>
+                            </td>
+                            <td id="taskTableName">${task.name}</td>
+                            <td id="taskTableCompany"></td>
+                            <td id="taskTableDeadline">${task.deadline}</td>
+                            <td class="td-actions text-right">
+                                <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                                  <i class="material-icons">edit</i>
+                                </button>
+                                <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                  <i class="material-icons">close</i>
+                                </button>
+                              </td>`;
+
+  const completeTaskButton = taskEl.querySelector("#completeTaskButton");
+  completeTaskButton.addEventListener("click", e =>
+    editTaskOnServer(e, task).then(editTaskOnUI(e, task))
+  );
+
+>>>>>>> fran
   tasksTableEl.append(taskEl);
 };
 
@@ -1041,8 +1136,10 @@ const renderApplicationForCoverLettersTable = application => {
         ${application.role}
       </td>
       <td>
-      <button class="btn btn-primary btn-round btn-small btn-success">Edit</button>
-      </td>
+      <button id=${
+        application.id
+      } class="btn btn-primary btn-round btn-small btn-success">Edit</button>
+      </td>    
   `;
   } else {
     applicationEl.innerHTML = `
@@ -1053,11 +1150,14 @@ const renderApplicationForCoverLettersTable = application => {
         ${application.role}
       </td>
       <td>
-      <button class="btn btn-primary btn-round btn-small btn-info">Add</button>
+      <button id=${
+        application.id
+      } class="btn btn-primary btn-round btn-small btn-info">Add</button>
       </td>
   `;
   }
-
+  const coverLetterButton = applicationEl.querySelector("button");
+  coverLetterButton.addEventListener("click", e => console.log("WORKS!"));
   coverLettersTable.append(applicationEl);
 };
 
