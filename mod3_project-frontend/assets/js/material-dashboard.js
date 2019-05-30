@@ -1152,7 +1152,7 @@ const login = () => {
     } else {
       md.showNotification(
         "top",
-        "left",
+        "center",
         "Your password or email are incorect!"
       );
     }
