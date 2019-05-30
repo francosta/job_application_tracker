@@ -1212,6 +1212,7 @@ const showNewApplicationModal = () => {
   });
 };
 
+// ####  CREATE NEW APPLICATION ON SERVER ####
 const createNewApplicationOnServer = e => {
   const createNewApplicationForm = e.target;
   const newCompanyName = createNewApplicationForm.querySelector(
