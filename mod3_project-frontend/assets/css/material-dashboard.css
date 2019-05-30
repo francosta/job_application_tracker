@@ -53,7 +53,13 @@ body {
   text-align: center;
 }
 
-#editModal{
+#usernameNavbar{
+  font-size: 1.1em;
+  font-weight: lighter;
+  color: #3f3f3f;
+}
+
+#editApplicationModal{
   text-align: center;
 }
 

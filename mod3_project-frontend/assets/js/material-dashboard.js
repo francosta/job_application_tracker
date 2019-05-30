@@ -995,6 +995,13 @@ const editProfileOnUI = (editedName, editedEducation, editedEmail) => {
   user.email = editedEmail;
 };
 
+
+const renderUsernameInNavbar = () => {
+  const usernameNavbar = document.getElementById("usernameNavbar")
+  usernameNavbar.innerText = user.name
+}
+
+
 const renderCoverLetters = () => {
   const userApplications = user.applications;
 
@@ -1163,6 +1170,7 @@ const init = () => {
 const loadDashboard = () => {
   getUser().then(resp => {
     user = resp;
+    renderUsernameInNavbar(user)
     renderNoOngoingApplications(user);
     renderNoTasks(user);
     renderApplications();
@@ -1172,11 +1180,3 @@ const loadDashboard = () => {
 };
 
 init();
-
-// Table modal
-
-{
-  /* <tr>
-                
-              </tr> */
-}
