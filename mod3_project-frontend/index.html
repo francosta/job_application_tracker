@@ -178,7 +178,7 @@
               <div class="card card-stats">
                 <div class="card-header card-header-info card-header-icon">
                   <div class="card-icon">
-                    <i class="fa fa-twitter"></i>
+                    <i class="fa fa-linkedin"></i>
                   </div>
                   <p class="card-category">Followers</p>
                   <h3 class="card-title">+245</h3>
@@ -798,6 +798,46 @@
         </div>
       </div>
     </div>
+  </div>
+    
+  <!-- Edit Application Modal --> 
+  <div class="modal" id="editModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title fadeIn first formHeader">Edit Application</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- <div class="fadeInDown"> -->
+            <!-- <div id="formContent"> -->
+              <!-- Tabs Titles -->
+              <!-- Icon -->
+              <!-- <div class="fadeIn first formHeader">
+                <h3> Edit Application </h3>
+              </div> -->
+              <!-- Edit Application Form -->
+              <form id="editApplicationForm" class="container" data-application_id="${application.id}">
+                <label for="editModalCompany">Company Name</label>
+                <input type="text" id="editModalCompany" class="fadeIn second" name="Company Name" value=${companyName}>
+                <label for="editModalRole">Your role</label>
+                <input type="text" id="editModalRole" class="fadeIn third" name="Role" value=${role}>
+                <label for="editModalPOC">Person of Contact</label>
+                <input type="text" id="editModalPOC" class="fadeIn third" name="Person of Contact" value=${personOfContact}>
+                <input type="submit" class="fadeIn fourth" value="Edit Application">
+              </form>
+            <!-- </div> -->
+          <!-- </div> -->
+        </div>
+        <!-- <div class="modal-footer">
+          <button type="button" class="btn btn-primary">Save changes</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div> -->
+      </div>
+    </div>
+  </div>
 
 </body>
 

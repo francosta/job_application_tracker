@@ -30,6 +30,7 @@ body {
 
 .formHeader{
   padding: 30px;
+  text-align: center;
 }
 
 .createAccount{
@@ -49,6 +50,10 @@ body {
   padding: 0px;
   -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
   box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+  text-align: center;
+}
+
+#editModal{
   text-align: center;
 }
 
