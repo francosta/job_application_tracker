@@ -879,50 +879,16 @@ const renderApplication = application => {
   applicationTableEl.append(applicationEl);
 };
 
-
 const editApplication = application => {
-  $("#editModal").modal();
+  $("#editApplicationModal").modal();
   const editModalCompany = document.querySelector("#editModalCompany");
   const editModalRole = document.querySelector("#editModalRole");
   const editModalPOC = document.querySelector("#editModalPOC");
+  const editModalForm = document.querySelector("#editApplicationForm");
   editModalCompany.value = application.company_name;
   editModalRole.value = application.role;
   editModalPOC.value = application.person_of_contact;
-  // const companyName = application.company_name;
-  // const role = application.role;
-  // const personOfContact = application.person_of_contact;
-  // const closeButton = document.getElementById("closeEdit");
-
-  // const outerForm = document.createElement("div");
-  // outerForm.className = "modal-wrapper";
-
-  //   outerForm.innerHTML = `
-  //   <div class="fadeInDown">
-  //     <div id="formContent">
-  //       <!-- Tabs Titles -->
-  //       <!-- Icon -->
-  //       <div class="fadeIn first formHeader">
-  //         <div id="closeEdit">X</div>
-  //         <h3> Edit Application </h3>
-  //       </div>
-  //       <!-- Edit Application Form -->
-  //       <form id="editApplicationForm" data-application_id="${application.id}">
-  //         <label for="companyName">Company Name</label>
-  //         <input type="text" id="companyName" class="fadeIn second" name="Company Name" value=${companyName}>
-  //         <label for="role">Your role</label>
-  //         <input type="text" id="role" class="fadeIn third" name="Role" value=${role}>
-  //         <label for="personOfContact">Person of Contact</label>
-  //         <input type="text" id="personOfContact" class="fadeIn third" name="Person of Contact" value=${personOfContact}>
-  //         <input type="submit" class="fadeIn fourth" value="Edit Application">
-  //       </form>
-  //     </div>
-  //   </div>
-  // `;
-
-
-  // closeButton.addEventListener("click", () => console.log("YOYOYO"))
-  // document.body.append(outerForm);
-  // const editApplicationForm = outerForm.querySelector("#editApplicationForm");
+  editModalForm.setAttribute("data-application_id", `${application.id}`);
 
   editApplicationForm.addEventListener("submit", e => {
     e.preventDefault();
@@ -932,58 +898,8 @@ const editApplication = application => {
       .then(
         md.showNotification("top", "left", "Your application has beed edited!")
       );
-    });
-  };
-
-
-
-
-// const editApplication = application => {
-//   const companyName = application.company_name;
-//   const role = application.role;
-//   const personOfContact = application.person_of_contact;
-//   const closeButton = document.getElementById("closeEdit");
-
-//   const outerForm = document.createElement("div");
-//   outerForm.className = "modal-wrapper";
-
-//   outerForm.innerHTML = `
-//   <div class="fadeInDown">
-//   <div id="formContent">
-//     <!-- Tabs Titles -->
-//     <!-- Icon -->
-//     <div class="fadeIn first formHeader">
-//       <div id="closeEdit">X</div>
-//       <h3> Edit Application </h3>
-//     </div>
-//     <!-- Edit Application Form -->
-//     <form id="editApplicationForm" data-application_id="${application.id}">
-//       <label for="companyName">Company Name</label>
-//       <input type="text" id="companyName" class="fadeIn second" name="Company Name" value=${companyName}>
-//       <label for="role">Your role</label>
-//       <input type="text" id="role" class="fadeIn third" name="Role" value=${role}>
-//       <label for="personOfContact">Person of Contact</label>
-//       <input type="text" id="personOfContact" class="fadeIn third" name="Person of Contact" value=${personOfContact}>
-//       <input type="submit" class="fadeIn fourth" value="Edit Application">
-//     </form>
-//   </div>
-// </div>
-// `;
-
-//   document.body.append(outerForm);
-
-//   const editApplicationForm = outerForm.querySelector("#editApplicationForm");
-
-//   editApplicationForm.addEventListener("submit", e => {
-//     e.preventDefault();
-//     editApplicationOnServer(e)
-//       .then(editApplicationOnUI(e))
-//       .then(outerForm.remove())
-//       .then(
-//         md.showNotification("top", "left", "Your application has beed edited!")
-//       );
-//   });
-// };
+  });
+};
 
 const editApplicationOnServer = e => {
   const updatedCompanyName = e.target[0].value;
@@ -1005,11 +921,13 @@ const editApplicationOnServer = e => {
     })
   };
 
-  return fetch(applicationURL, options).then(response => {
-    if (response.status === 200) {
-      response.json();
-    }
-  });
+  return fetch(applicationURL, options)
+    .then(response => {
+      if (response.status === 200) {
+        response.json();
+      }
+    })
+    .then($("#editApplicationModal").modal("hide"));
 };
 
 const editApplicationOnUI = e => {
