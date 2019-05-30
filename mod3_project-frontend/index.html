@@ -55,7 +55,7 @@
             <hr>
           </li>
           <li class="nav-item active">
-            <a id="createNewApplication" class="nav-link btn-primary" href="#">
+            <a id="createNewApplication" class="nav-link btn-primary" href="#" onclick="showNewApplicationModal()">
               <i class="material-icons">description</i>
               <p>Create new Application</p>
             </a>
@@ -822,46 +822,7 @@
           </button>
         </div>
         <div class="modal-body">
-          <!-- <div class="fadeInDown"> -->
-            <!-- <div id="formContent"> -->
-              <!-- Tabs Titles -->
-              <!-- Icon -->
-              <!-- <div class="fadeIn first formHeader">
-                <h3> Edit Application </h3>
-              </div> -->
-              <!-- Edit Application Form -->
-              <form id="editApplicationForm" class="container">
-                <label for="editModalCompany">Company Name</label>
-                <input type="text" id="editModalCompany" class="fadeIn second" name="Company Name" value=${companyName}>
-                <label for="editModalRole">Your role</label>
-                <input type="text" id="editModalRole" class="fadeIn third" name="Role" value=${role}>
-                <label for="editModalPOC">Person of Contact</label>
-                <input type="text" id="editModalPOC" class="fadeIn third" name="Person of Contact" value=${personOfContact}>
-                <input type="submit" class="fadeIn fourth" value="Edit Application">
-              </form>
-            <!-- </div> -->
-          <!-- </div> -->
-        </div>
-        <!-- <div class="modal-footer">
-          <button type="button" class="btn btn-primary">Save changes</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div> -->
-      </div>
-    </div>
-  </div>
-
-  <!-- Create New Application Modal --> 
-  <div class="modal" id="createNewApplicationModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3 class="modal-title fadeIn first formHeader">Edit Application</h3>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form id="createNewApplicationForm" class="container">
+          <form id="editApplicationForm" class="container">
             <label for="editModalCompany">Company Name</label>
             <input type="text" id="editModalCompany" class="fadeIn second" name="Company Name" value=${companyName}>
             <label for="editModalRole">Your role</label>
@@ -875,9 +836,31 @@
     </div>
   </div>
 
+  <!-- Create New Application Modal --> 
+  <div class="modal" id="createNewApplicationModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title fadeIn first formHeader">Create New Application</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="createNewApplicationForm" class="container">
+            <label for="editModalCompany">Company Name</label>
+            <input type="text" id="editModalCompany" class="fadeIn second" name="Company Name">
+            <label for="editModalRole">Your role</label>
+            <input type="text" id="editModalRole" class="fadeIn third" name="Role">
+            <label for="editModalPOC">Person of Contact</label>
+            <input type="text" id="editModalPOC" class="fadeIn third" name="Person of Contact">
+            <input type="submit" class="fadeIn fourth" value="Create Application">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </body>
 
 </html>
-
-
-  

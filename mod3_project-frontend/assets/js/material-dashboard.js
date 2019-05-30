@@ -769,7 +769,7 @@ function debounce(func, wait, immediate) {
   };
 }
 
-//By us
+// !!!!#### CODED BY US ####!!!!
 let currentUserId = null;
 let user = [];
 
@@ -778,12 +778,16 @@ function getUser() {
   return fetch(userURL).then(resp => resp.json());
 }
 
+
+// #### RENDER ONGOING APPLICATIONS ####
 const renderNoOngoingApplications = user => {
   const ongoingApplications = document.getElementById("ongoing-applications");
   const numberOfApplications = user.applications.length;
   ongoingApplications.innerText = numberOfApplications;
 };
 
+
+// #### RENDER TASKS ####
 const renderTasks = () => {
   const userTasks = user.applications
     .map(application =>
@@ -801,25 +805,25 @@ const renderTask = task => {
   const tasksTableEl = document.querySelector("#tasksTableEl");
   const taskEl = document.createElement("tr");
   taskEl.innerHTML = `
-  <td>
-                              <div class="form-check">
-                                <label class="form-check-label">
-                                  <input class="form-check-input" type="checkbox" value="" checked>
-                                  <span class="form-check-sign">
-                                    <span class="check"></span>
-                                  </span>
-                                </label>
-                              </div>
-                            </td>
-                            <td>${task.name}</td>
-                            <td class="td-actions text-right">
-                              <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                <i class="material-icons">edit</i>
-                              </button>
-                              <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                <i class="material-icons">close</i>
-                              </button>
-                            </td>
+    <td>
+      <div class="form-check">
+        <label class="form-check-label">
+          <input class="form-check-input" type="checkbox" value="" checked>
+          <span class="form-check-sign">
+            <span class="check"></span>
+          </span>
+        </label>
+      </div>
+    </td>
+    <td>${task.name}</td>
+    <td class="td-actions text-right">
+      <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+        <i class="material-icons">edit</i>
+      </button>
+      <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+        <i class="material-icons">close</i>
+      </button>
+    </td>
   `;
   tasksTableEl.append(taskEl);
 };
@@ -838,6 +842,8 @@ const renderNoTasks = user => {
   tasksDueEl.innerText = noTasksDue;
 };
 
+
+// #### RENDER APPLICATIONS ####
 const renderApplications = () => {
   const userApplications = user.applications;
   userApplications.forEach(application => {
@@ -879,6 +885,7 @@ const renderApplication = application => {
   applicationTableEl.append(applicationEl);
 };
 
+// #### EDIT APPLICATION ####
 const editApplication = application => {
   $("#editApplicationModal").modal();
   const editModalCompany = document.querySelector("#editModalCompany");
@@ -946,10 +953,11 @@ const editApplicationOnUI = e => {
   rowToEdit.children[2].innerText = editedPersonOfContact;
 };
 
+
+// #### EDIT PROFILE ####
 const editProfile = () => {
   const editedName = document.querySelector("#profileModalName").value;
-  const editedEducation = document.querySelector("#profileModalEducation")
-    .value;
+  const editedEducation = document.querySelector("#profileModalEducation").value;
   const editedEmail = document.querySelector("#profileModalEmail").value;
 
   editProfileOnServer(editedName, editedEducation, editedEmail).then(
@@ -996,12 +1004,14 @@ const editProfileOnUI = (editedName, editedEducation, editedEmail) => {
 };
 
 
+// #### RENDER USERNAME IN NAVBAR ####
 const renderUsernameInNavbar = () => {
   const usernameNavbar = document.getElementById("usernameNavbar")
   usernameNavbar.innerText = user.name
 }
 
 
+// #### RENDER COVER LETTERS ####
 const renderCoverLetters = () => {
   const userApplications = user.applications;
 
@@ -1051,25 +1061,8 @@ const renderApplicationForCoverLettersTable = application => {
   coverLettersTable.append(applicationEl);
 };
 
-const logout = () => {
-  const id = currentUserId;
-  const sessionsURL = "http://localhost:3000/sessions";
-  const sessionURL = `${sessionsURL}/${id}`;
 
-  const options = {
-    method: "DELETE"
-  };
-  return fetch(sessionURL, options).then(response => {
-    if (response.status === 200) {
-      response.json();
-      currentUserId = null;
-      showLoginModal();
-    } else {
-      MessageEvent(response.json());
-    }
-  });
-};
-
+// #### SHOW LOGIN MODAL ####
 const showLoginModal = () => {
   const wrapper = document.createElement("div");
   wrapper.className = "modal-wrapper";
@@ -1101,6 +1094,8 @@ const showLoginModal = () => {
   document.body.append(wrapper);
 };
 
+
+// #### SHOW PROFILE MODAL ####
 const showProfileModal = () => {
   $("#profileModal").modal();
   const profileModalName = document.querySelector("#profileModalName");
@@ -1115,6 +1110,8 @@ const showProfileModal = () => {
   profileModalNameH4.innerText = user.name;
 };
 
+
+// #### SHOW COVER LETTER MODAL ####
 const showCoverLettersModal = () => {
   $("#coverLettersModal").modal();
 };
@@ -1125,6 +1122,16 @@ const listenToForm = () => {
   });
 };
 
+// #### SHOW CREATE NEW APPLICARION MODAL ####
+const showNewApplicationModal = () => {
+  $("#createNewApplicationModal").modal();
+};
+
+//#######
+
+
+
+// #### LOGIN ####
 const login = () => {
   const userEmail = loginForm.querySelector("#login").value;
   const userPassword = loginForm.querySelector("#password").value;
@@ -1152,6 +1159,29 @@ const login = () => {
   });
 };
 
+
+// #### LOGOUT ####
+const logout = () => {
+  const id = currentUserId;
+  const sessionsURL = "http://localhost:3000/sessions";
+  const sessionURL = `${sessionsURL}/${id}`;
+
+  const options = {
+    method: "DELETE"
+  };
+  return fetch(sessionURL, options).then(response => {
+    if (response.status === 200) {
+      response.json();
+      currentUserId = null;
+      showLoginModal();
+    } else {
+      MessageEvent(response.json());
+    }
+  });
+};
+
+
+// #### INIT ####
 const init = () => {
   if (currentUserId === null) {
     showLoginModal();
