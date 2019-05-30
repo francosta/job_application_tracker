@@ -1129,7 +1129,6 @@ const renderApplicationForCoverLettersTable = application => {
   `;
   }
   const buttonTd = applicationEl.querySelector("#button_td");
-  console.log(buttonTd.children[0]);
   // buttonTd.children[0].addEventListener("click", e => console.log("WORKS!"));
   coverLettersTable.append(applicationEl);
 };
