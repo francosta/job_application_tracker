@@ -262,20 +262,14 @@
                       <span class="nav-tabs-title">Tasks:</span>
                       <ul class="nav nav-tabs" data-tabs="tabs">
                         <li class="nav-item">
-                          <a class="nav-link active" href="#profile" data-toggle="tab">
-                            <i class="material-icons">bug_report</i> Bugs
+                          <a class="nav-link active" href="#dueTasks" data-toggle="tab">
+                            <i class="material-icons">query_builder</i> Due
                             <div class="ripple-container"></div>
                           </a>
                         </li>
                         <li class="nav-item">
-                          <a class="nav-link" href="#messages" data-toggle="tab">
-                            <i class="material-icons">code</i> Website
-                            <div class="ripple-container"></div>
-                          </a>
-                        </li>
-                        <li class="nav-item">
-                          <a class="nav-link" href="#settings" data-toggle="tab">
-                            <i class="material-icons">cloud</i> Server
+                          <a class="nav-link" href="#completedTasks" data-toggle="tab">
+                            <i class="material-icons">check_circle</i> Completed
                             <div class="ripple-container"></div>
                           </a>
                         </li>
@@ -285,38 +279,16 @@
                 </div>
                 <div class="card-body">
                   <div class="tab-content">
-                    <div class="tab-pane active" id="profile">
+                    <div class="tab-pane active" id="dueTasks">
                       <table class="table">
+                      <tr>
+                        <th></th>
+                        <th>Task</th>
+                        <th>Application</th>
+                        <th>Deadline</th>
+                        <th></th>
+                      </tr>  
                         <tbody id="tasksTableEl">
-                        </tbody>
-                      </table>
-                    </div>
-                    <div class="tab-pane" id="messages">
-                      <table class="table">
-                        <tbody>
-                          <tr>
-                            <td>
-                              <div class="form-check">
-                                <label class="form-check-label">
-                                  <input class="form-check-input" type="checkbox" value="" checked>
-                                  <span class="form-check-sign">
-                                    <span class="check"></span>
-                                  </span>
-                                </label>
-                              </div>
-                            </td>
-                            <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                            </td>
-                            <td class="td-actions text-right">
-                              <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                <i class="material-icons">edit</i>
-                              </button>
-                              <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                <i class="material-icons">close</i>
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
                             <td>
                               <div class="form-check">
                                 <label class="form-check-label">
@@ -327,88 +299,53 @@
                                 </label>
                               </div>
                             </td>
-                            <td>Sign contract for "What are conference organizers afraid of?"</td>
+                            <td id="taskTableName"></td>
+                            <td id="taskTableCompany"></td>
+                            <td id="taskTableDeadline"></td>
                             <td class="td-actions text-right">
-                              <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                <i class="material-icons">edit</i>
-                              </button>
-                              <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                <i class="material-icons">close</i>
-                              </button>
-                            </td>
-                          </tr>
+                                <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                                  <i class="material-icons">edit</i>
+                                </button>
+                                <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                  <i class="material-icons">close</i>
+                                </button>
+                              </td>
                         </tbody>
                       </table>
                     </div>
-                    <div class="tab-pane" id="settings">
-                      <table class="table">
-                        <tbody>
-                          <tr>
-                            <td>
-                              <div class="form-check">
-                                <label class="form-check-label">
-                                  <input class="form-check-input" type="checkbox" value="">
-                                  <span class="form-check-sign">
-                                    <span class="check"></span>
-                                  </span>
-                                </label>
-                              </div>
-                            </td>
-                            <td>Lines From Great Russian Literature? Or E-mails From My Boss?</td>
-                            <td class="td-actions text-right">
-                              <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                <i class="material-icons">edit</i>
-                              </button>
-                              <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                <i class="material-icons">close</i>
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="form-check">
-                                <label class="form-check-label">
-                                  <input class="form-check-input" type="checkbox" value="" checked>
-                                  <span class="form-check-sign">
-                                    <span class="check"></span>
-                                  </span>
-                                </label>
-                              </div>
-                            </td>
-                            <td>Flooded: One year later, assessing what was lost and what was found when a ravaging rain swept through metro Detroit
-                            </td>
-                            <td class="td-actions text-right">
-                              <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                <i class="material-icons">edit</i>
-                              </button>
-                              <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                <i class="material-icons">close</i>
-                              </button>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td>
-                              <div class="form-check">
-                                <label class="form-check-label">
-                                  <input class="form-check-input" type="checkbox" value="" checked>
-                                  <span class="form-check-sign">
-                                    <span class="check"></span>
-                                  </span>
-                                </label>
-                              </div>
-                            </td>
-                            <td>Sign contract for "What are conference organizers afraid of?"</td>
-                            <td class="td-actions text-right">
-                              <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
-                                <i class="material-icons">edit</i>
-                              </button>
-                              <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
-                                <i class="material-icons">close</i>
-                              </button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
+                    <div class="tab-pane" id="completedTasks">
+                        <table class="table">
+                            <tr>
+                              <th></th>
+                              <th>Task</th>
+                              <th>Application</th>
+                              <th>Deadline</th>
+                              <th></th>
+                            </tr>  
+                              <tbody id="tasksTableEl">
+                                  <td>
+                                    <div class="form-check">
+                                      <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" value="">
+                                        <span class="form-check-sign">
+                                          <span class="check"></span>
+                                        </span>
+                                      </label>
+                                    </div>
+                                  </td>
+                                  <td id="taskTableName"></td>
+                                  <td id="taskTableCompany"></td>
+                                  <td id="taskTableDeadline"></td>
+                                  <td class="td-actions text-right">
+                                      <button type="button" rel="tooltip" title="Edit Task" class="btn btn-primary btn-link btn-sm">
+                                        <i class="material-icons">edit</i>
+                                      </button>
+                                      <button type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm">
+                                        <i class="material-icons">close</i>
+                                      </button>
+                                    </td>
+                              </tbody>
+                            </table>
                     </div>
                   </div>
                 </div>
