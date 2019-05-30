@@ -1018,6 +1018,55 @@ const editProfileOnUI = (editedName, editedEducation, editedEmail) => {
   user.email = editedEmail;
 };
 
+const renderCoverLetters = () => {
+  const userApplications = user.applications;
+
+  const userCoverLetters = user.applications
+    .map(application =>
+      application.cover_letters.map(coverLetter => {
+        return coverLetter;
+      })
+    )
+    .flat();
+
+  userApplications.forEach(application => {
+    renderApplicationForCoverLettersTable(application);
+  });
+};
+
+const renderApplicationForCoverLettersTable = application => {
+  const coverLettersTable = document.querySelector("#coverLettersTable");
+  const applicationEl = document.createElement("tr");
+
+  if (application.cover_letters.length > 0) {
+    applicationEl.innerHTML = `
+      <td>
+        ${application.company_name}
+      </td>
+      <td>
+        ${application.role}
+      </td>
+      <td>
+      <button class="btn btn-primary btn-round btn-small btn-success">Edit</button>
+      </td>
+  `;
+  } else {
+    applicationEl.innerHTML = `
+      <td>
+        ${application.company_name}
+      </td>
+      <td>
+        ${application.role}
+      </td>
+      <td>
+      <button class="btn btn-primary btn-round btn-small btn-info">Add</button>
+      </td>
+  `;
+  }
+
+  coverLettersTable.append(applicationEl);
+};
+
 const logout = () => {
   const id = currentUserId;
   const sessionsURL = "http://localhost:3000/sessions";
@@ -1040,34 +1089,31 @@ const logout = () => {
 const showLoginModal = () => {
   const wrapper = document.createElement("div");
   wrapper.className = "modal-wrapper";
-
   wrapper.innerHTML = `
-  <div class="fadeInDown">
-  <div id="formContent">
-    <!-- Tabs Titles -->
-    <!-- Icon -->
-    <div class="fadeIn first formHeader">
-    <div>Please enter your email and password to log-in</div>
-    </div>
-    <!-- Login Form -->
-    <form id="loginForm" >
-      <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-      <input type="password" id="password" class="fadeIn third" name="login" placeholder="password">
-      <input type="submit" class="fadeIn fourth" value="Log In">
-    </form>
-    <!-- Remind Passowrd -->
-    <div id="formFooter" class="createAccount"> You don't have an account?<br>
-      <a class="underlineHover" href="#" > Create your account </a>
+    <div class="fadeInDown">
+    <div id="formContent">
+      <!-- Tabs Titles -->
+      <!-- Icon -->
+      <div class="fadeIn first formHeader">
+      <div>Please enter your email and password to log-in</div>
+      </div>
+      <!-- Login Form -->
+      <form id="loginForm" >
+        <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
+        <input type="password" id="password" class="fadeIn third" name="login" placeholder="password">
+        <input type="submit" class="fadeIn fourth" value="Log In">
+      </form>
+      <!-- Remind Passowrd -->
+      <div id="formFooter" class="createAccount"> You don't have an account?<br>
+        <a class="underlineHover" href="#" > Create your account </a>
+      </div>
     </div>
   </div>
-</div>
-`;
-
+  `;
   // const signinBtn = wrapper.querySelector('.signin-btn')
   // signinBtn.addEventListener('click', () => {
   //   wrapper.remove()
   // })
-
   document.body.append(wrapper);
 };
 
@@ -1083,6 +1129,10 @@ const showProfileModal = () => {
   profileModalEmail.value = user.email;
   profileModalEducation.value = user.education;
   profileModalNameH4.innerText = user.name;
+};
+
+const showCoverLettersModal = () => {
+  $("#coverLettersModal").modal();
 };
 
 const listenToForm = () => {
@@ -1121,7 +1171,7 @@ const login = () => {
 const init = () => {
   if (currentUserId === null) {
     showLoginModal();
-    const loginForm = document.querySelector("#loginForm");
+    const loginForm = document.querySelector("#loginModal");
     listenToForm();
   } else {
     getUser().then(resp => {
@@ -1140,7 +1190,16 @@ const loadDashboard = () => {
     renderNoTasks(user);
     renderApplications();
     renderTasks();
+    renderCoverLetters();
   });
 };
 
 init();
+
+// Table modal
+
+{
+  /* <tr>
+                
+              </tr> */
+}

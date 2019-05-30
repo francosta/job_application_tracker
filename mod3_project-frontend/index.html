@@ -45,9 +45,9 @@
               <p>My Profile</p>
             </a>
           </li>
-          <li class="nav-item ">
-            <a class="nav-link" href="./rtl.html">
-              <i class="material-icons">language</i>
+          <li class="nav-item" onclick="showCoverLettersModal()">
+            <a class="nav-link">
+              <i class="material-icons">subject</i>
               <p>Cover Letters</p>
             </a>
         </ul>
@@ -146,7 +146,7 @@
               <div class="card card-stats">
                 <div class="card-header card-header-success card-header-icon">
                   <div class="card-icon">
-                    <i class="material-icons">store</i>
+                    <i class="material-icons">check_circle</i>
                   </div>
                   <p class="card-category">No. of Tasks Due</p>
                   <h3 id="TasksDue" class="card-title"></h3>
@@ -774,6 +774,37 @@
       </div>
     </div>
   </div>
+
+  <!-- Cover Letters Modal -->
+
+  <div id="coverLettersModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="card">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title ">Cover Letters</h4>
+            <p class="card-category"> Please add or edit a cover letter for an ongoing application</p>
+        </div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead class=" text-primary">
+                <th>
+                  Company
+                </th>
+                <th>
+                  Role
+                </th>
+                <th>
+                  Cover Letter
+                </th>
+              </thead>
+              <tbody id="coverLettersTable">
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </body>
 
