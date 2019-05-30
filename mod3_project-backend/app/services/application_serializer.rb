@@ -8,7 +8,7 @@ class ApplicationSerializer
         options = {            
               include: {
                   tasks: {
-                      only: [:name, :deadline]
+                      only: [:name, :deadline, :status]
                   },
                   cover_letters: {
                     only: [:content]

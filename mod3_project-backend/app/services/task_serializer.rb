@@ -5,7 +5,7 @@ class TaskSerializer
     end
 
     def to_serialized_hash
-        options = {only: [:name, :deadline, :id]}
+        options = {only: [:name, :deadline, :id, :status]}
         @task.to_json(options)
     end
 
