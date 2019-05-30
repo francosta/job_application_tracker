@@ -916,7 +916,7 @@ const renderNoTasks = user => {
 const renderApplications = () => {
   const applicationTableEl = document.querySelector("#applicationsTable")
     .children[1];
-    applicationTableEl.innerHTML = ``
+  applicationTableEl.innerHTML = ``;
   const userApplications = user.applications;
   userApplications.forEach(application => {
     renderApplication(application);
@@ -964,7 +964,9 @@ const editApplication = application => {
   const editModalRole = document.querySelector("#editModalRole");
   const editModalPOC = document.querySelector("#editModalPOC");
   const editModalForm = document.querySelector("#editApplicationForm");
-  const deleteApplicationButton = document.querySelector("#deleteApplicationButton")
+  const deleteApplicationButton = document.querySelector(
+    "#deleteApplicationButton"
+  );
   editModalCompany.value = application.company_name;
   editModalRole.value = application.role;
   editModalPOC.value = application.person_of_contact;
@@ -972,11 +974,12 @@ const editApplication = application => {
 
   editApplicationForm.addEventListener("submit", e => {
     e.preventDefault();
-    editApplicationOnServer(e)
-      .then(editApplicationOnUI(e))
+    editApplicationOnServer(e).then(editApplicationOnUI(e));
   });
 
-  deleteApplicationButton.addEventListener("click", e => deleteApplicationOnServer(e))
+  deleteApplicationButton.addEventListener("click", e =>
+    deleteApplicationOnServer(e)
+  );
 };
 
 const editApplicationOnServer = e => {
@@ -1023,7 +1026,7 @@ const editApplicationOnUI = e => {
   rowToEdit.children[1].innerText = editedRole;
   rowToEdit.children[2].innerText = editedPersonOfContact;
   if (e.type === "submit") {
-    md.showNotification("top", "left", "Your application has beed edited!")
+    md.showNotification("top", "left", "Your application has beed edited!");
   }
 };
 
@@ -1206,13 +1209,14 @@ const showNewApplicationModal = () => {
   );
   createNewApplicationForm.addEventListener("submit", e => {
     e.preventDefault();
-    createNewApplicationOnServer(e).then(() => {
+    createNewApplicationOnServer(e).then(resp => {
       $("#createNewApplicationModal").modal("hide"),
         md.showNotification(
           "top",
           "left",
           "A new application has been created. Good luck!"
         );
+      createNewApplicationOnUI(resp);
     });
   });
 };
@@ -1242,9 +1246,11 @@ const createNewApplicationOnServer = e => {
     })
   };
 
-  return fetch(applicationsURL, options)
-    .then(resp => resp.json())
-    .then(resp => renderApplication(resp));
+  return fetch(applicationsURL, options).then(resp => resp.json());
+};
+
+const createNewApplicationOnUI = resp => {
+  renderApplication(resp);
 };
 
 // ####  DELETE APPLICATION FROM SERVER ####
@@ -1257,17 +1263,21 @@ const deleteApplicationOnServer = e => {
     method: "DELETE"
   };
 
-  return fetch(applicationURL, options).then(resp => resp.json()).then(resp => {
-    deleteApplicationOnUI(resp)})
-    
-}
+  return fetch(applicationURL, options)
+    .then(resp => resp.json())
+    .then(resp => {
+      deleteApplicationOnUI(resp);
+    });
+};
 
 const deleteApplicationOnUI = response => {
-  const applicationToDeleteId = response.id
-  user.applications = user.applications.filter(application => application.id !== applicationToDeleteId)
-  renderApplications(user)
-  md.showNotification("top", "right", "Your application has been deleted.")
-}
+  const applicationToDeleteId = response.id;
+  user.applications = user.applications.filter(
+    application => application.id !== applicationToDeleteId
+  );
+  renderApplications(user);
+  md.showNotification("top", "right", "Your application has been deleted.");
+};
 
 // #### LOGIN ####
 const login = () => {
