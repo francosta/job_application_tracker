@@ -29,10 +29,16 @@ class ApplicationsController < ApplicationController
         end
     end
 
+    def destroy
+        application = Application.all.find_by(application_params)
+        application.destroy
+        render json: application
+    end
+
     private
 
     def application_params
-        params.permit(:company_name, :person_of_contact, :role, :user_id)
+        params.permit(:company_name, :person_of_contact, :role, :user_id, :id)
     end
 
 
