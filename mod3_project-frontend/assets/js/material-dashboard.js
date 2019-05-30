@@ -1136,8 +1136,10 @@ const renderApplicationForCoverLettersTable = application => {
         ${application.role}
       </td>
       <td>
-      <button class="btn btn-primary btn-round btn-small btn-success">Edit</button>
-      </td>
+      <button id=${
+        application.id
+      } class="btn btn-primary btn-round btn-small btn-success">Edit</button>
+      </td>    
   `;
   } else {
     applicationEl.innerHTML = `
@@ -1148,11 +1150,14 @@ const renderApplicationForCoverLettersTable = application => {
         ${application.role}
       </td>
       <td>
-      <button class="btn btn-primary btn-round btn-small btn-info">Add</button>
+      <button id=${
+        application.id
+      } class="btn btn-primary btn-round btn-small btn-info">Add</button>
       </td>
   `;
   }
-
+  const coverLetterButton = applicationEl.querySelector("button");
+  coverLetterButton.addEventListener("click", e => console.log("WORKS!"));
   coverLettersTable.append(applicationEl);
 };
 
