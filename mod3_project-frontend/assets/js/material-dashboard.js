@@ -914,6 +914,9 @@ const renderNoTasks = user => {
 
 // #### RENDER APPLICATIONS ####
 const renderApplications = () => {
+  const applicationTableEl = document.querySelector("#applicationsTable")
+    .children[1];
+    applicationTableEl.innerHTML = ``
   const userApplications = user.applications;
   userApplications.forEach(application => {
     renderApplication(application);
@@ -961,6 +964,7 @@ const editApplication = application => {
   const editModalRole = document.querySelector("#editModalRole");
   const editModalPOC = document.querySelector("#editModalPOC");
   const editModalForm = document.querySelector("#editApplicationForm");
+  const deleteApplicationButton = document.querySelector("#deleteApplicationButton")
   editModalCompany.value = application.company_name;
   editModalRole.value = application.role;
   editModalPOC.value = application.person_of_contact;
@@ -970,11 +974,9 @@ const editApplication = application => {
     e.preventDefault();
     editApplicationOnServer(e)
       .then(editApplicationOnUI(e))
-      // .then(outerForm.remove())
-      .then(
-        md.showNotification("top", "left", "Your application has beed edited!")
-      );
   });
+
+  deleteApplicationButton.addEventListener("click", e => deleteApplicationOnServer(e))
 };
 
 const editApplicationOnServer = e => {
@@ -1020,6 +1022,9 @@ const editApplicationOnUI = e => {
   rowToEdit.children[0].innerText = editedCompany;
   rowToEdit.children[1].innerText = editedRole;
   rowToEdit.children[2].innerText = editedPersonOfContact;
+  if (e.type === "submit") {
+    md.showNotification("top", "left", "Your application has beed edited!")
+  }
 };
 
 // #### EDIT PROFILE ####
@@ -1241,6 +1246,28 @@ const createNewApplicationOnServer = e => {
     .then(resp => resp.json())
     .then(resp => renderApplication(resp));
 };
+
+// ####  DELETE APPLICATION FROM SERVER ####
+const deleteApplicationOnServer = e => {
+  const applicationId = e.target.parentElement.dataset.application_id;
+  const applicationsURL = "http://localhost:3000/applications";
+  const applicationURL = `${applicationsURL}/${applicationId}`;
+
+  const options = {
+    method: "DELETE"
+  };
+
+  return fetch(applicationURL, options).then(resp => resp.json()).then(resp => {
+    deleteApplicationOnUI(resp)})
+    
+}
+
+const deleteApplicationOnUI = response => {
+  const applicationToDeleteId = response.id
+  user.applications = user.applications.filter(application => application.id !== applicationToDeleteId)
+  renderApplications(user)
+  md.showNotification("top", "right", "Your application has been deleted.")
+}
 
 // #### LOGIN ####
 const login = () => {
