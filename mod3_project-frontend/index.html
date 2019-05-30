@@ -61,7 +61,7 @@
             </a>
           </li>
           <li class="nav-item active">
-              <a style="background-color: red; color: white" id="createNewApplication" class="nav-link btn-primary" onclick="showNewApplicationModal()">
+              <a style="background-color: red; color: white" id="createNewApplication" class="nav-link btn-primary" onclick="showFindJobsModal()">
                 <i class="material-icons" style="color: white">work_outline</i>
                 <p>Find New Jobs</p>
               </a>
@@ -798,6 +798,36 @@
       </div>
     </div>
   </div>
+
+  <!-- Find Jobs Modal -->
+  <div id="newJobsModal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title ">Find New Jobs</h4>
+              <p class="card-category"> These are the most recent openings for your industry</p>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table">
+                <thead class=" text-primary">
+                  <th>
+                    Company
+                  </th>
+                  <th>
+                    Role
+                  </th>
+                  <th>
+                  </th>
+                </thead>
+                <tbody id="newJobsTable">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
 </body>
 

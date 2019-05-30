@@ -1307,6 +1307,30 @@ const login = () => {
   });
 };
 
+const showFindJobsModal = () => {
+  $("#newJobsModal").modal();
+  getReedJobs();
+};
+
+const getReedJobs = () => {
+  const username = "619968d8-7b27-461f-a1a9-32e1b71faec5";
+  const reedURL =
+    "http://www.reed.co.uk/api/1.0/search?keywords=banking%20banking%20finance&location=london&distancefromlocation=1";
+
+  var settings = {
+    async: true,
+    crossDomain: true,
+    url:
+      "http://www.reed.co.uk/api/1.0/search?keywords=banking%20banking%20finance&location=london&distancefromlocation=1",
+    method: "GET",
+    headers: {
+      Authorization: "Basic 619968d8-7b27-461f-a1a9-32e1b71faec5"
+    }
+  };
+
+  return fetch(reedURL, settings).then(resp => console.log(resp.json()));
+};
+
 // #### LOGOUT ####
 const logout = () => {
   const id = currentUserId;
