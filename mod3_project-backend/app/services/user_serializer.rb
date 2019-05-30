@@ -8,7 +8,7 @@ class UserSerializer
         options = {
           include: {
             applications: {
-              only: [:role, :company_name, :person_of_contact, :id],
+              only: [:role, :company_name, :person_of_contact, :id, :industry],
               include: {
                   tasks: {
                       only: [:name, :deadline, :status, :id]

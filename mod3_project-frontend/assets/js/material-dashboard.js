@@ -1172,12 +1172,14 @@ const showProfileModal = () => {
   const profileModalPicture = document.querySelector("#profileModalPicture");
   const profileModalEmail = document.querySelector("#profileModalEmail");
   const profileModalNameH4 = document.querySelector("#profileModalNameh4");
+  const profileModalIndustry = document.querySelector("#profileModalIndustry");
 
   profileModalName.value = user.name;
   profileModalPicture.src = user.image;
   profileModalEmail.value = user.email;
   profileModalEducation.value = user.education;
   profileModalNameH4.innerText = user.name;
+  profileModalIndustry.innerText = user.industry;
 };
 
 // #### SHOW COVER LETTERS MODAL ####
