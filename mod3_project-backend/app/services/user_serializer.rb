@@ -11,7 +11,7 @@ class UserSerializer
               only: [:role, :company_name, :person_of_contact, :id],
               include: {
                   tasks: {
-                      only: [:name, :deadline]
+                      only: [:name, :deadline, :status, :id]
                   },
                   cover_letters: {
                     only: [:content]
