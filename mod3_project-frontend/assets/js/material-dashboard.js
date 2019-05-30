@@ -778,14 +778,12 @@ function getUser() {
   return fetch(userURL).then(resp => resp.json());
 }
 
-
 // #### RENDER ONGOING APPLICATIONS ####
 const renderNoOngoingApplications = user => {
   const ongoingApplications = document.getElementById("ongoing-applications");
   const numberOfApplications = user.applications.length;
   ongoingApplications.innerText = numberOfApplications;
 };
-
 
 // #### RENDER TASKS ####
 const renderTasks = () => {
@@ -914,7 +912,6 @@ const renderNoTasks = user => {
   tasksDueEl.innerText = noTasksDue;
 };
 
-
 // #### RENDER APPLICATIONS ####
 const renderApplications = () => {
   const userApplications = user.applications;
@@ -1025,11 +1022,11 @@ const editApplicationOnUI = e => {
   rowToEdit.children[2].innerText = editedPersonOfContact;
 };
 
-
 // #### EDIT PROFILE ####
 const editProfile = () => {
   const editedName = document.querySelector("#profileModalName").value;
-  const editedEducation = document.querySelector("#profileModalEducation").value;
+  const editedEducation = document.querySelector("#profileModalEducation")
+    .value;
   const editedEmail = document.querySelector("#profileModalEmail").value;
 
   editProfileOnServer(editedName, editedEducation, editedEmail).then(
@@ -1075,13 +1072,11 @@ const editProfileOnUI = (editedName, editedEducation, editedEmail) => {
   user.email = editedEmail;
 };
 
-
 // #### RENDER USERNAME IN NAVBAR ####
 const renderUsernameInNavbar = () => {
-  const usernameNavbar = document.getElementById("usernameNavbar")
-  usernameNavbar.innerText = user.name
-}
-
+  const usernameNavbar = document.getElementById("usernameNavbar");
+  usernameNavbar.innerText = user.name;
+};
 
 // #### RENDER COVER LETTERS ####
 const renderCoverLetters = () => {
@@ -1112,7 +1107,7 @@ const renderApplicationForCoverLettersTable = application => {
       <td>
         ${application.role}
       </td>
-      <td>
+      <td id="button_td">
       <button id=${
         application.id
       } class="btn btn-primary btn-round btn-small btn-success">Edit</button>
@@ -1126,18 +1121,18 @@ const renderApplicationForCoverLettersTable = application => {
       <td>
         ${application.role}
       </td>
-      <td>
+      <td id="button_td">
       <button id=${
         application.id
       } class="btn btn-primary btn-round btn-small btn-info">Add</button>
       </td>
   `;
   }
-  const coverLetterButton = applicationEl.querySelector("button");
-  coverLetterButton.addEventListener("click", e => console.log("WORKS!"));
+  const buttonTd = applicationEl.querySelector("#button_td");
+  console.log(buttonTd.children[0]);
+  // buttonTd.children[0].addEventListener("click", e => console.log("WORKS!"));
   coverLettersTable.append(applicationEl);
 };
-
 
 // #### SHOW LOGIN MODAL ####
 const showLoginModal = () => {
@@ -1171,7 +1166,6 @@ const showLoginModal = () => {
   document.body.append(wrapper);
 };
 
-
 // #### SHOW PROFILE MODAL ####
 const showProfileModal = () => {
   $("#profileModal").modal();
@@ -1187,8 +1181,7 @@ const showProfileModal = () => {
   profileModalNameH4.innerText = user.name;
 };
 
-
-// #### SHOW COVER LETTER MODAL ####
+// #### SHOW COVER LETTERS MODAL ####
 const showCoverLettersModal = () => {
   $("#coverLettersModal").modal();
 };
@@ -1199,14 +1192,53 @@ const listenToForm = () => {
   });
 };
 
-// #### SHOW CREATE NEW APPLICARION MODAL ####
+// #### SHOW CREATE NEW APPLICATION MODAL ####
 const showNewApplicationModal = () => {
   $("#createNewApplicationModal").modal();
+  const createNewApplicationForm = document.querySelector(
+    "#createNewApplicationForm"
+  );
+  createNewApplicationForm.addEventListener("submit", e => {
+    e.preventDefault();
+    createNewApplicationOnServer(e).then(() => {
+      $("#createNewApplicationModal").modal("hide"),
+        md.showNotification(
+          "top",
+          "left",
+          "A new application has been created. Good luck!"
+        );
+    });
+  });
 };
 
-//#######
+const createNewApplicationOnServer = e => {
+  const createNewApplicationForm = e.target;
+  const newCompanyName = createNewApplicationForm.querySelector(
+    "#createNewApplicationCompany"
+  ).value;
+  const newRoleName = createNewApplicationForm.querySelector(
+    "#createNewApplicationRole"
+  ).value;
+  const newPOCName = createNewApplicationForm.querySelector(
+    "#createNewApplicationPOC"
+  ).value;
 
+  const applicationsURL = "http://localhost:3000/applications";
+  const options = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      user_id: currentUserId,
+      role: newRoleName,
+      company_name: newCompanyName,
+      person_of_contact: newPOCName
+    })
+  };
 
+  return fetch(applicationsURL, options)
+    .then(resp => resp.json())
+    .then(resp => renderApplication(resp));
+};
 
 // #### LOGIN ####
 const login = () => {
@@ -1236,7 +1268,6 @@ const login = () => {
   });
 };
 
-
 // #### LOGOUT ####
 const logout = () => {
   const id = currentUserId;
@@ -1257,7 +1288,6 @@ const logout = () => {
   });
 };
 
-
 // #### INIT ####
 const init = () => {
   if (currentUserId === null) {
@@ -1277,7 +1307,7 @@ const init = () => {
 const loadDashboard = () => {
   getUser().then(resp => {
     user = resp;
-    renderUsernameInNavbar(user)
+    renderUsernameInNavbar(user);
     renderNoOngoingApplications(user);
     renderNoTasks(user);
     renderApplications();

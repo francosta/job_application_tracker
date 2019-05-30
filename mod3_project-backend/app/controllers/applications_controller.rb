@@ -10,6 +10,18 @@ class ApplicationsController < ApplicationController
         render json: ApplicationSerializer.new(@application).to_serialized_hash
     end
 
+    def create
+        application = Application.new(application_params)
+        if application.save
+            render json: application
+        else
+           render json: {
+             error: "The user was not logged out.",
+             status: 400
+             }, status: 400
+        end
+    end
+
     def update
         application = Application.find_by(id: params[:id].to_i)
         if application.update(application_params)
@@ -20,7 +32,7 @@ class ApplicationsController < ApplicationController
     private
 
     def application_params
-        params.permit(:company_name, :person_of_contact, :role)
+        params.permit(:company_name, :person_of_contact, :role, :user_id)
     end
 
 
