@@ -305,6 +305,10 @@ input[type=text]:placeholder {
   max-width: 88%;
 }
 
+#addTask{
+  float: left;
+}
+
 #deleteApplication{
   background-color: #red;
   border: none;
@@ -17345,6 +17349,12 @@ label {
 .card .card-header.card-header-tabs .nav-tabs-title {
   float: left;
   padding: 10px 10px 10px 0;
+  line-height: 24px;
+}
+
+.card .card-header.card-header-tabs .nav-tabs-title-two {
+  float: right;
+  padding: 0;
   line-height: 24px;
 }
 
