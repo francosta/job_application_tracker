@@ -1047,14 +1047,25 @@ const editProfile = () => {
   const editedEducation = document.querySelector("#profileModalEducation")
     .value;
   const editedEmail = document.querySelector("#profileModalEmail").value;
+  const editedCity = document.querySelector("#profileModalCity").value;
 
-  editProfileOnServer(editedName, editedEducation, editedEmail).then(resp => {
-    editProfileOnUI(editedName, editedEducation, editedEmail);
+  editProfileOnServer(
+    editedName,
+    editedEducation,
+    editedEmail,
+    editedCity
+  ).then(resp => {
+    editProfileOnUI(editedName, editedEducation, editedEmail, editedCity);
     $("#profileModal").modal("hide");
   });
 };
 
-const editProfileOnServer = (editedName, editedEducation, editedEmail) => {
+const editProfileOnServer = (
+  editedName,
+  editedEducation,
+  editedEmail,
+  editedCity
+) => {
   const usersURL = "http://localhost:3000/users";
   const userURL = `${usersURL}/${currentUserId}`;
   const options = {
@@ -1064,7 +1075,8 @@ const editProfileOnServer = (editedName, editedEducation, editedEmail) => {
       id: currentUserId,
       name: editedName,
       education: editedEducation,
-      email: editedEmail
+      email: editedEmail,
+      city: editedCity
     })
   };
 
@@ -1085,10 +1097,16 @@ const editProfileOnServer = (editedName, editedEducation, editedEmail) => {
   });
 };
 
-const editProfileOnUI = (editedName, editedEducation, editedEmail) => {
+const editProfileOnUI = (
+  editedName,
+  editedEducation,
+  editedEmail,
+  editedCity
+) => {
   user.name = editedName;
   user.education = editedEducation;
   user.email = editedEmail;
+  user.city = editedCity;
   renderUsernameInNavbar();
 };
 
@@ -1249,6 +1267,7 @@ const showProfileModal = () => {
   const profileModalEmail = document.querySelector("#profileModalEmail");
   const profileModalNameH4 = document.querySelector("#profileModalNameh4");
   const profileModalIndustry = document.querySelector("#profileModalIndustry");
+  const profileModalCity = document.querySelector("#profileModalCity");
 
   profileModalName.value = user.name;
   profileModalPicture.src = user.image;
@@ -1256,6 +1275,7 @@ const showProfileModal = () => {
   profileModalEducation.value = user.education;
   profileModalNameH4.innerText = user.name;
   profileModalIndustry.innerText = user.industry;
+  profileModalCity.value = user.city;
 };
 
 // #### SHOW COVER LETTERS MODAL ####
@@ -1420,7 +1440,7 @@ const getReedJobs = () => {
   const url = `https://cors-anywhere.herokuapp.com/http://www.reed.co.uk/api/1.0/search?keywords=${user.industry.replace(
     '"',
     ""
-  )}&location=london&distancefromlocation=3`;
+  )}&location=${user.city.replace('"', "")}&distancefromlocation=3`;
   return fetch(url, {
     headers: {
       "X-Requested-With": "lol",
