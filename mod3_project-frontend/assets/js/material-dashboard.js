@@ -1,5 +1,9 @@
 let selectedApplication = null;
 const editApplicationForm = document.querySelector("#editApplicationForm");
+const createNewApplicationForm = document.querySelector(
+  "#createNewApplicationForm"
+);
+const newTaskForm = document.querySelector("#createNewTaskForm");
 /*!
 
  =========================================================
@@ -1089,8 +1093,6 @@ const editProfileOnUI = (editedName, editedEducation, editedEmail) => {
 const createNewTask = () => {
   $("#createNewTaskModal").modal();
 
-  const newTaskForm = document.querySelector("#createNewTaskForm");
-
   const applicationsDropdown = document.querySelector(
     "#existingApplicationsforTasks"
   );
@@ -1103,13 +1105,14 @@ const createNewTask = () => {
     }`;
     applicationsDropdown.append(applicationDropdownItem);
   });
-
-  newTaskForm.addEventListener("submit", e => createNewTaskOnServer(e));
 };
 
-const createNewTaskOnServer = e => {
+newTaskForm.addEventListener("submit", e => {
   e.preventDefault();
+  createNewTaskOnServer();
+});
 
+const createNewTaskOnServer = () => {
   const newTaskDescription = e.target.querySelector("#createNewTaskDescription")
     .value;
   const newTaskDeadline = e.target.querySelector("#createNewTaskDeadline")
@@ -1244,22 +1247,20 @@ const listenToForm = () => {
 // #### SHOW CREATE NEW APPLICATION MODAL ####
 const showNewApplicationModal = () => {
   $("#createNewApplicationModal").modal();
-  const createNewApplicationForm = document.querySelector(
-    "#createNewApplicationForm"
-  );
-  createNewApplicationForm.addEventListener("submit", e => {
-    e.preventDefault();
-    createNewApplicationOnServer(e).then(resp => {
-      $("#createNewApplicationModal").modal("hide"),
-        md.showNotification(
-          "top",
-          "left",
-          "A new application has been created. Good luck!"
-        );
-      createNewApplicationOnUI(resp);
-    });
-  });
 };
+
+createNewApplicationForm.addEventListener("submit", e => {
+  e.preventDefault();
+  createNewApplicationOnServer(e).then(resp => {
+    $("#createNewApplicationModal").modal("hide"),
+      md.showNotification(
+        "top",
+        "left",
+        "A new application has been created. Good luck!"
+      );
+    createNewApplicationOnUI(resp);
+  });
+});
 
 // ####  CREATE NEW APPLICATION ON SERVER ####
 const createNewApplicationOnServer = e => {
