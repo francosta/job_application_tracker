@@ -7,6 +7,7 @@ const newTaskForm = document.querySelector("#createNewTaskForm");
 const deleteApplicationButton = document.querySelector(
   "#deleteApplicationButton"
 );
+let newJobs = [];
 /*!
 
  =========================================================
@@ -1370,20 +1371,63 @@ const login = () => {
 
 const showFindJobsModal = () => {
   $("#newJobsModal").modal();
-  getReedJobs();
+  renderNewJobs();
+};
+
+const renderNewJobs = () => {
+  newJobs.forEach(job => {
+    renderNewJob(job);
+  });
+};
+
+const renderNewJob = job => {
+  const newJobsTableEl = document.querySelector("#newJobsTable");
+
+  const newJobEl = document.createElement("tr");
+
+  const newJobCompanyEl = document.createElement("td");
+  newJobCompanyEl.className = "new_company_name";
+  newJobCompanyEl.innerText = job.employerName;
+
+  const newJobRoleEl = document.createElement("td");
+  newJobRoleEl.className = "role";
+  newJobRoleEl.innerText = job.jobTitle;
+
+  const newJobApplyButton = document.createElement("td");
+  newJobApplyButton.className = "td-actions text-right";
+  newJobApplyButton.innerHTML = `
+    <button type="button" id="apply" rel="tooltip" title="Apply" class="btn btn-primary btn-link btn-sm">
+      Apply
+    </button>`;
+
+  const newJobSeeMoreButton = document.createElement("td");
+  newJobSeeMoreButton.className = "td-actions text-right";
+  newJobSeeMoreButton.innerHTML = `
+    <button "type="button" id="seeMore" rel="tooltip" title="See More" class="btn ">
+    <a href="${job.jobUrl}">See More</a>
+    </button>`;
+
+  newJobEl.append(
+    newJobCompanyEl,
+    newJobRoleEl,
+    newJobApplyButton,
+    newJobSeeMoreButton
+  );
+  newJobsTableEl.append(newJobEl);
 };
 
 const getReedJobs = () => {
-  const url =
-    "https://cors-anywhere.herokuapp.com/http://www.reed.co.uk/api/1.0/search?keywords=banking%20banking%20finance&location=london&distancefromlocation=1";
-
+  const url = `https://cors-anywhere.herokuapp.com/http://www.reed.co.uk/api/1.0/search?keywords=${user.industry.replace(
+    '"',
+    ""
+  )}&location=london&distancefromlocation=3`;
   return fetch(url, {
     headers: {
       "X-Requested-With": "lol",
       Authorization:
         "Basic NjE5OTY4ZDgtN2IyNy00NjFmLWExYTktMzJlMWI3MWZhZWM1Og=="
     }
-  }).then(resp => console.log(resp.json()));
+  }).then(resp => resp.json());
 };
 
 // #### LOGOUT ####
@@ -1399,6 +1443,7 @@ const logout = () => {
     if (response.status === 200) {
       response.json();
       currentUserId = null;
+      newJobs = [];
       showLoginModal();
     } else {
       MessageEvent(response.json());
@@ -1409,6 +1454,7 @@ const logout = () => {
 // #### INIT ####
 const init = () => {
   if (currentUserId === null) {
+    newJobs = [];
     showLoginModal();
     listenToForm();
   } else {
@@ -1424,6 +1470,7 @@ const init = () => {
 const loadDashboard = () => {
   getUser().then(resp => {
     user = resp;
+    getReedJobs().then(resp => (newJobs = resp.results));
     renderUsernameInNavbar(user);
     renderNoOngoingApplications(user);
     renderNoTasks(user);
