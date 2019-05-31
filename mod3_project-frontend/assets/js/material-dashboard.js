@@ -801,7 +801,7 @@ const renderNoTasks = user => {
 
 // TABLES
 
-// #### RENDER TASKS ####
+//#### RENDER TASKS ####
 const renderTasks = () => {
   const userTasks = user.applications
     .map(application =>
@@ -1082,6 +1082,33 @@ const editProfileOnUI = (editedName, editedEducation, editedEmail) => {
   user.education = editedEducation;
   user.email = editedEmail;
   renderUsernameInNavbar();
+};
+
+// ADD TASK
+const createNewTask = () => {
+  $("#createNewTaskModal").modal();
+
+  const newTaskForm = document.querySelector("#createNewTaskForm");
+
+  const applicationsDropdown = document.querySelector(
+    "#existingApplicationsforTasks"
+  );
+  user.applications.forEach(application => {
+    const applicationDropdownItem = document.createElement("a");
+    applicationDropdownItem.className = "dropdown-item";
+    applicationDropdownItem.id = application.id;
+    applicationDropdownItem.innerText = `${application.role} - ${
+      application.company_name
+    }`;
+    applicationsDropdown.append(applicationDropdownItem);
+  });
+
+  newTaskForm.addEventListener("submit", e => createNewTaskOnServer(e));
+};
+
+const createNewTaskOnServer = e => {
+  e.preventDefault();
+  debugger;
 };
 
 // #### RENDER USERNAME IN NAVBAR ####

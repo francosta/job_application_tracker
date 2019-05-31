@@ -279,6 +279,11 @@
                             <div class="ripple-container"></div>
                           </a>
                         </li>
+                        <li class="nav-item">
+                            <button id="addTask" onclick="createNewTask()" class="btn btn-primary btn-fab btn-fab-mini btn-round">
+                                <i class="material-icons">add</i>
+                              </button>
+                        </li>
                       </ul>
                     </div>
                   </div>
@@ -793,6 +798,38 @@
             <label for="createNewApplicationPOC">Person of Contact</label>
             <input type="text" id="createNewApplicationPOC" class="fadeIn third" name="Person of Contact">
             <input type="submit" class="fadeIn fourth" value="Create Application">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Create New Task Modal -->
+
+<div class="modal" id="createNewTaskModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title fadeIn first formHeader">Create New Task</h3>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="createNewTaskForm" class="container">
+            <label for="createNewTaskDescription">Task Description</label>
+            <input type="text" id="createNewTaskDescription" class="fadeIn second" name="Task Description">
+            <label for="createNewTaskDeadline">Deadline</label>
+            <input type="text" id="createNewTaskDeadline" class="fadeIn third" name="Deadline">
+            <label for="createNewTaskApplication"></label>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Select Application
+                </button>
+                <div id="existingApplicationsforTasks" class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                </div>
+              </div>
+            <input type="submit" class="fadeIn fourth" value="Create Task">
           </form>
         </div>
       </div>
