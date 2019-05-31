@@ -957,7 +957,7 @@ const renderApplication = application => {
 
   editApplicationButton.addEventListener("click", () => {
     selectedApplication = application;
-    $("#editApplicationModal").modal();
+    editApplication();
   });
 
   applicationCompanyEl.innerText = application.company_name;
@@ -979,14 +979,16 @@ const editApplication = application => {
   const editModalCompany = document.querySelector("#editModalCompany");
   const editModalRole = document.querySelector("#editModalRole");
   const editModalPOC = document.querySelector("#editModalPOC");
-  const editModalForm = document.querySelector("#editApplicationForm");
   const deleteApplicationButton = document.querySelector(
     "#deleteApplicationButton"
   );
-  editModalCompany.value = application.company_name;
-  editModalRole.value = application.role;
-  editModalPOC.value = application.person_of_contact;
-  editModalForm.setAttribute("data-application_id", `${application.id}`);
+  editModalCompany.value = selectedApplication.company_name;
+  editModalRole.value = selectedApplication.role;
+  editModalPOC.value = selectedApplication.person_of_contact;
+  editApplicationForm.setAttribute(
+    "data-application_id",
+    `${selectedApplication.id}`
+  );
 
   deleteApplicationButton.addEventListener("click", e =>
     deleteApplicationOnServer(e).then(deleteApplicationOnUI(e))
@@ -1109,18 +1111,40 @@ const createNewTask = () => {
 
 newTaskForm.addEventListener("submit", e => {
   e.preventDefault();
-  createNewTaskOnServer();
+  createNewTaskOnServer().then(resp => createNewTaskOnUI(resp));
+  $("#createNewTaskModal").modal("hide");
 });
 
 const createNewTaskOnServer = () => {
-  const newTaskDescription = e.target.querySelector("#createNewTaskDescription")
+  const tempApplication = user.applications[0];
+  const newTaskApplication = newTaskForm.querySelector(
+    "#createNewTaskApplication"
+  ).value;
+  const newTaskName = `${
+    newTaskForm.querySelector("#createNewTaskDescription").value
+  } for ${tempApplication.company_name}`;
+  const newTaskDeadline = newTaskForm.querySelector("#createNewTaskDeadline")
     .value;
-  const newTaskDeadline = e.target.querySelector("#createNewTaskDeadline")
-    .value;
+  const newTaskStatus = false;
 
-  const newTaskApplication = e.target.querySelector("#createNewTaskApplication")
-    .value;
+  const url = "http://localhost:3000/tasks";
+  const options = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      application_id: tempApplication.id,
+      name: newTaskName,
+      deadline: newTaskDeadline,
+      status: newTaskStatus
+    })
+  };
   debugger;
+
+  return fetch(url, options).then(resp => resp.json());
+};
+
+const createNewTaskOnUI = task => {
+  renderDueTask(task);
 };
 
 // #### RENDER USERNAME IN NAVBAR ####
