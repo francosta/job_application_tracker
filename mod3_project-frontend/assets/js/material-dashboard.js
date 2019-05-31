@@ -1314,15 +1314,22 @@ const showFindJobsModal = () => {
 
 const getReedJobs = () => {
   const username = "619968d8-7b27-461f-a1a9-32e1b71faec5";
+  const url =
+    "http://www.reed.co.uk/api/1.0/search?keywords=banking%20banking%20finance&location=london&distancefromlocation=1";
 
-  return fetch(
-    "https://www.reed.co.uk/api/1.0/search?keywords=banking%20banking%20finance&location=london&distancefromlocation=1",
-    {
-      headers: {
-        authorization: "Basic 619968d8-7b27-461f-a1a9-32e1b71faec5"
-      }
+  const options = {
+    async: true,
+    crossDomain: true,
+    url:
+      "http://www.reed.co.uk/api/1.0/search?keywords=banking%20banking%20finance&location=london&distancefromlocation=1",
+    method: "GET",
+    headers: {
+      Authorization: "Basic 619968d8-7b27-461f-a1a9-32e1b71faec5",
+      "Access-Control-Allow-Origin": "*"
     }
-  ).then(resp => resp.json());
+  };
+
+  return fetch(url, options).then(resp => resp.json());
 };
 
 // #### LOGOUT ####
@@ -1349,7 +1356,6 @@ const logout = () => {
 const init = () => {
   if (currentUserId === null) {
     showLoginModal();
-    const loginForm = document.querySelector("#loginModal");
     listenToForm();
   } else {
     getUser().then(resp => {
