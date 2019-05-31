@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_30_172449) do
+ActiveRecord::Schema.define(version: 2019_05_31_122904) do
 
   create_table "applications", force: :cascade do |t|
     t.string "person_of_contact"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2019_05_30_172449) do
     t.string "education"
     t.string "email"
     t.string "industry"
+    t.string "city"
   end
 
 end
