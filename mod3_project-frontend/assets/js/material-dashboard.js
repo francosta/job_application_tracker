@@ -1,3 +1,5 @@
+let selectedApplication = null;
+const editApplicationForm = document.querySelector("#editApplicationForm");
 /*!
 
  =========================================================
@@ -929,10 +931,17 @@ const renderApplication = application => {
   const applicationTableEl = document.querySelector("#applicationsTable")
     .children[1];
   const applicationEl = document.createElement("tr");
+  applicationEl.id = `application-${application.id}`;
   applicationEl.dataset.application_id = application.id;
   const applicationCompanyEl = document.createElement("td");
+  applicationCompanyEl.className = "company_name";
+
   const applicationRoleEl = document.createElement("td");
+  applicationRoleEl.className = "role";
+
   const applicationPersonOfContactEl = document.createElement("td");
+  applicationPersonOfContactEl.className = "person_of_contact";
+
   const applicationButtons = document.createElement("td");
   applicationButtons.className = "td-actions text-right";
   applicationButtons.innerHTML = `
@@ -943,7 +952,8 @@ const renderApplication = application => {
   const editApplicationButton = applicationButtons.querySelector("#edit");
 
   editApplicationButton.addEventListener("click", () => {
-    editApplication(application);
+    selectedApplication = application;
+    $("#editApplicationModal").modal();
   });
 
   applicationCompanyEl.innerText = application.company_name;
@@ -974,34 +984,32 @@ const editApplication = application => {
   editModalPOC.value = application.person_of_contact;
   editModalForm.setAttribute("data-application_id", `${application.id}`);
 
-  editApplicationForm.addEventListener("submit", e => {
-    e.preventDefault();
-    editApplicationOnServer(e).then(editApplicationOnUI(e));
-  });
-
   deleteApplicationButton.addEventListener("click", e =>
     deleteApplicationOnServer(e).then(deleteApplicationOnUI(e))
   );
 };
 
-const editApplicationOnServer = e => {
-  const updatedCompanyName = e.target[0].value;
-  const updatedRole = e.target[1].value;
-  const updatedPersonOfContact = e.target[2].value;
+editApplicationForm.addEventListener("submit", e => {
+  e.preventDefault();
 
-  const applicationId = e.target.dataset.application_id;
+  selectedApplication.company_name = editApplicationForm.company_name.value;
+  selectedApplication.role = editApplicationForm.role.value;
+  selectedApplication.person_of_contact =
+    editApplicationForm.person_of_contact.value;
+
+  editApplicationOnServer(selectedApplication).then(() =>
+    editApplicationOnUI(selectedApplication)
+  );
+});
+
+const editApplicationOnServer = application => {
   const applicationsURL = "http://localhost:3000/applications";
-  const applicationURL = `${applicationsURL}/${applicationId}`;
+  const applicationURL = `${applicationsURL}/${application.id}`;
 
   const options = {
     method: "PATCH",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      id: applicationId,
-      company_name: updatedCompanyName,
-      role: updatedRole,
-      person_of_contact: updatedPersonOfContact
-    })
+    body: JSON.stringify(application)
   };
 
   return fetch(applicationURL, options)
@@ -1013,24 +1021,17 @@ const editApplicationOnServer = e => {
     .then($("#editApplicationModal").modal("hide"));
 };
 
-const editApplicationOnUI = e => {
-  const applicationId = e.target.dataset.application_id;
-  const applicationTableEl = document.querySelector("#applicationsTable")
-    .children[1];
-  const rowToEdit = Array.from(applicationTableEl.children).find(
-    row => row.dataset.application_id === applicationId
-  );
-  const editedCompany = e.target[0].value;
-  const editedRole = e.target[1].value;
-  const editedPersonOfContact = e.target[2].value;
+const editApplicationOnUI = application => {
+  const rowToEdit = document.querySelector(`#application-${application.id}`);
+  const companyTd = rowToEdit.querySelector(".company_name");
+  const roleTd = rowToEdit.querySelector(".role");
+  const pocTd = rowToEdit.querySelector(".person_of_contact");
 
-  rowToEdit.children[0].innerText = editedCompany;
-  rowToEdit.children[1].innerText = editedRole;
-  rowToEdit.children[2].innerText = editedPersonOfContact;
-  e.target.reset();
-  if (e.type === "submit") {
-    md.showNotification("top", "left", "Your application has beed edited!");
-  }
+  companyTd.innerText = application.company_name;
+  roleTd.innerText = application.role;
+  pocTd.innerText = application.person_of_contact;
+  editApplicationForm.reset();
+  md.showNotification("top", "left", "Your application has beed edited!");
 };
 
 // #### EDIT PROFILE ####
@@ -1108,6 +1109,14 @@ const createNewTask = () => {
 
 const createNewTaskOnServer = e => {
   e.preventDefault();
+
+  const newTaskDescription = e.target.querySelector("#createNewTaskDescription")
+    .value;
+  const newTaskDeadline = e.target.querySelector("#createNewTaskDeadline")
+    .value;
+
+  const newTaskApplication = e.target.querySelector("#createNewTaskApplication")
+    .value;
   debugger;
 };
 
@@ -1340,23 +1349,16 @@ const showFindJobsModal = () => {
 };
 
 const getReedJobs = () => {
-  const username = "619968d8-7b27-461f-a1a9-32e1b71faec5";
   const url =
-    "http://www.reed.co.uk/api/1.0/search?keywords=banking%20banking%20finance&location=london&distancefromlocation=1";
+    "https://cors-anywhere.herokuapp.com/http://www.reed.co.uk/api/1.0/search?keywords=banking%20banking%20finance&location=london&distancefromlocation=1";
 
-  const options = {
-    async: true,
-    crossDomain: true,
-    url:
-      "http://www.reed.co.uk/api/1.0/search?keywords=banking%20banking%20finance&location=london&distancefromlocation=1",
-    method: "GET",
+  return fetch(url, {
     headers: {
-      Authorization: "Basic 619968d8-7b27-461f-a1a9-32e1b71faec5",
-      "Access-Control-Allow-Origin": "*"
+      "X-Requested-With": "lol",
+      Authorization:
+        "Basic NjE5OTY4ZDgtN2IyNy00NjFmLWExYTktMzJlMWI3MWZhZWM1Og=="
     }
-  };
-
-  return fetch(url, options).then(resp => resp.json());
+  }).then(resp => console.log(resp.json()));
 };
 
 // #### LOGOUT ####
