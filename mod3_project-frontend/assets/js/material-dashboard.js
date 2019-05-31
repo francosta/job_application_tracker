@@ -4,6 +4,9 @@ const createNewApplicationForm = document.querySelector(
   "#createNewApplicationForm"
 );
 const newTaskForm = document.querySelector("#createNewTaskForm");
+const deleteApplicationButton = document.querySelector(
+  "#deleteApplicationButton"
+);
 /*!
 
  =========================================================
@@ -979,9 +982,6 @@ const editApplication = application => {
   const editModalCompany = document.querySelector("#editModalCompany");
   const editModalRole = document.querySelector("#editModalRole");
   const editModalPOC = document.querySelector("#editModalPOC");
-  const deleteApplicationButton = document.querySelector(
-    "#deleteApplicationButton"
-  );
   editModalCompany.value = selectedApplication.company_name;
   editModalRole.value = selectedApplication.role;
   editModalPOC.value = selectedApplication.person_of_contact;
@@ -989,11 +989,11 @@ const editApplication = application => {
     "data-application_id",
     `${selectedApplication.id}`
   );
-
-  deleteApplicationButton.addEventListener("click", e =>
-    deleteApplicationOnServer(e).then(deleteApplicationOnUI(e))
-  );
 };
+
+deleteApplicationButton.addEventListener("click", e =>
+  deleteApplicationOnServer(e).then(deleteApplicationOnUI(e))
+);
 
 editApplicationForm.addEventListener("submit", e => {
   e.preventDefault();

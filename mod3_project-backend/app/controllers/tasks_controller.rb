@@ -16,7 +16,7 @@ class TasksController < ApplicationController
         render json: task
     end
 
-    def create
+    def creates
         task = Task.new(task_params)
         if task.save
             render json: task
