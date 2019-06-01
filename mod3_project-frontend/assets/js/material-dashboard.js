@@ -996,6 +996,7 @@ deleteApplicationButton.addEventListener("click", () =>
   deleteApplicationOnServer().then(() => {
     deleteApplicationOnUI();
     $("#editApplicationModal").modal("hide");
+    renderApplicationsForTasks();
   })
 );
 
@@ -1007,9 +1008,9 @@ editApplicationForm.addEventListener("submit", e => {
   selectedApplication.person_of_contact =
     editApplicationForm.person_of_contact.value;
 
-  editApplicationOnServer(selectedApplication).then(() =>
-    editApplicationOnUI(selectedApplication)
-  );
+  editApplicationOnServer(selectedApplication).then(() => {
+    editApplicationOnUI(selectedApplication);
+  });
 });
 
 const editApplicationOnServer = application => {
@@ -1040,6 +1041,13 @@ const editApplicationOnUI = application => {
   companyTd.innerText = application.company_name;
   roleTd.innerText = application.role;
   pocTd.innerText = application.person_of_contact;
+
+  const indexOfApplication = user.applications.findIndex(
+    oldApplication => oldApplication.id === application.id
+  );
+
+  renderApplicationsForTasks();
+
   editApplicationForm.reset();
   md.showNotification("top", "left", "Your application has beed edited!");
 };
@@ -1116,10 +1124,15 @@ const editProfileOnUI = (
 // ADD TASK
 const createNewTask = () => {
   $("#createNewTaskModal").modal();
+};
 
+const renderApplicationsForTasks = () => {
   const applicationsDropdown = document.querySelector(
     "#existingApplicationsforTasks"
   );
+
+  applicationsDropdown.innerHTML = ``;
+
   user.applications.forEach(application => {
     const applicationDropdownItem = document.createElement("a");
     applicationDropdownItem.className = "dropdown-item";
@@ -1204,10 +1217,10 @@ const renderApplicationForCoverLettersTable = application => {
       <td>
         ${application.role}
       </td>
-      <td id="button_td">
-      <button id=${
+      <td>
+      <button id="cover-letter-button-${
         application.id
-      } class="btn btn-primary btn-round btn-small btn-success">Edit</button>
+      }" class="btn btn-success btn-round">Edit</button>
       </td>    
   `;
   } else {
@@ -1218,15 +1231,19 @@ const renderApplicationForCoverLettersTable = application => {
       <td>
         ${application.role}
       </td>
-      <td id="button_td">
-      <button id=${
+      <td>
+      <button id="cover-letter-button-${
         application.id
-      } class="btn btn-primary btn-round btn-small btn-info">Add</button>
+      }" class="btn btn-info btn-round">Add</button>
       </td>
   `;
   }
-  const buttonTd = applicationEl.querySelector("#button_td");
-  // buttonTd.children[0].addEventListener("click", e => console.log("WORKS!"));
+
+  const coverLetterButton = applicationEl.querySelector(
+    `#cover-letter-button-${application.id}`
+  );
+
+  coverLetterButton.addEventListener("click", e => console.log("WORKS!"));
   coverLettersTable.append(applicationEl);
 };
 
@@ -1307,6 +1324,7 @@ createNewApplicationForm.addEventListener("submit", e => {
         "A new application has been created. Good luck!"
       );
     createNewApplicationOnUI(resp);
+    createNewApplicationForm.reset();
   });
 });
 
@@ -1340,6 +1358,7 @@ const createNewApplicationOnServer = e => {
 
 const createNewApplicationOnUI = resp => {
   renderApplication(resp);
+  renderApplicationsForTasks();
 };
 
 // ####  DELETE APPLICATION FROM SERVER ####
@@ -1416,25 +1435,34 @@ const renderNewJob = job => {
   newJobRoleEl.className = "role";
   newJobRoleEl.innerText = job.jobTitle;
 
-  const newJobApplyButton = document.createElement("td");
-  newJobApplyButton.className = "td-actions text-right";
-  newJobApplyButton.innerHTML = `
-    <button type="button" id="apply" rel="tooltip" title="Apply" class="btn btn-primary btn-link btn-sm">
-      Apply
-    </button>`;
+  const newJobApplyEl = document.createElement("td");
+  newJobApplyEl.className = "td-actions text-right";
+  newJobApplyEl.innerHTML = `
+    <button id="newJobApplyButton" rel="tooltip" title="Apply" class="btn btn-primary btn-success btn-sm">Apply</button>`;
 
-  const newJobSeeMoreButton = document.createElement("td");
-  newJobSeeMoreButton.className = "td-actions text-right";
-  newJobSeeMoreButton.innerHTML = `
-    <button "type="button" id="seeMore" rel="tooltip" title="See More" class="btn ">
-    <a href="${job.jobUrl}">See More</a>
-    </button>`;
+  const newJobApplyButton = newJobApplyEl.querySelector("#newJobApplyButton");
+  newJobApplyButton.addEventListener("click", application => {
+    createNewApplicationForm.querySelector(
+      "#createNewApplicationCompany"
+    ).value = job.employerName;
+    createNewApplicationForm.querySelector("#createNewApplicationRole").value =
+      job.jobTitle;
+    $("#newJobsModal").modal("hide");
+    $("#createNewApplicationModal").modal();
+  });
+
+  const newJobSeeMoreEl = document.createElement("td");
+  newJobSeeMoreEl.className = "td-actions text-right";
+  newJobSeeMoreEl.innerHTML = `
+    <button id="seeMoreNewJobButton" rel="tooltip" title="See More" class="btn btn-primary btn-info btn-sm"><a  target="_blank" href="${
+      job.jobUrl
+    }">See More</a></button>`;
 
   newJobEl.append(
     newJobCompanyEl,
     newJobRoleEl,
-    newJobApplyButton,
-    newJobSeeMoreButton
+    newJobApplyEl,
+    newJobSeeMoreEl
   );
   newJobsTableEl.append(newJobEl);
 };
@@ -1499,6 +1527,7 @@ const loadDashboard = () => {
     renderNoTasks(user);
     renderApplications();
     renderTasks();
+    renderApplicationsForTasks();
     renderCoverLetters();
   });
 };
