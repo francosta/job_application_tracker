@@ -1358,6 +1358,7 @@ const createNewApplicationOnServer = e => {
 
 const createNewApplicationOnUI = resp => {
   renderApplication(resp);
+  user.applications.push(resp);
   renderApplicationsForTasks();
 };
 
