@@ -992,8 +992,11 @@ const editApplication = application => {
   );
 };
 
-deleteApplicationButton.addEventListener("click", e =>
-  deleteApplicationOnServer(e).then(deleteApplicationOnUI(e))
+deleteApplicationButton.addEventListener("click", () =>
+  deleteApplicationOnServer().then(() => {
+    deleteApplicationOnUI();
+    $("#editApplicationModal").modal("hide");
+  })
 );
 
 editApplicationForm.addEventListener("submit", e => {
@@ -1340,8 +1343,8 @@ const createNewApplicationOnUI = resp => {
 };
 
 // ####  DELETE APPLICATION FROM SERVER ####
-const deleteApplicationOnServer = e => {
-  const applicationId = e.target.parentElement.dataset.application_id;
+const deleteApplicationOnServer = () => {
+  const applicationId = selectedApplication.id;
   const applicationsURL = "http://localhost:3000/applications";
   const applicationURL = `${applicationsURL}/${applicationId}`;
 
@@ -1352,8 +1355,8 @@ const deleteApplicationOnServer = e => {
   return fetch(applicationURL, options).then(resp => resp.json());
 };
 
-const deleteApplicationOnUI = response => {
-  const applicationToDeleteId = response.id;
+const deleteApplicationOnUI = () => {
+  const applicationToDeleteId = selectedApplication.id;
   user.applications = user.applications.filter(
     application => application.id !== applicationToDeleteId
   );
