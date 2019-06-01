@@ -813,6 +813,10 @@ const renderNoTasks = user => {
 
 //#### RENDER TASKS ####
 const renderTasks = () => {
+  const dueTasksTableEl = document.querySelector("#dueTasksTableEl");
+  dueTasksTableEl.innerHTML = ``;
+  const doneTasksTableEl = document.querySelector("#completeTasksTableEl");
+  doneTasksTableEl.innerHTML = ``;
   const userTasks = user.applications
     .map(application =>
       application.tasks.map(task => {
@@ -830,7 +834,7 @@ const renderTasks = () => {
 };
 
 const renderDueTask = task => {
-  const tasksTableEl = document.querySelector("#dueTasksTableEl");
+  const dueTasksTableEl = document.querySelector("#dueTasksTableEl");
   const taskEl = document.createElement("tr");
   taskEl.innerHTML = `
   <td id=${task.id}>
@@ -859,11 +863,11 @@ const renderDueTask = task => {
   completeTaskButton.addEventListener("click", e =>
     editTaskOnServer(e, task).then(editTaskOnUI(e, task))
   );
-  tasksTableEl.append(taskEl);
+  dueTasksTableEl.append(taskEl);
 };
 
 const renderDoneTask = task => {
-  const tasksTableEl = document.querySelector("#completeTasksTableEl");
+  const doneTasksTableEl = document.querySelector("#completeTasksTableEl");
   const taskEl = document.createElement("tr");
   taskEl.innerHTML = `
   <td id=${task.id}>
@@ -893,7 +897,7 @@ const renderDoneTask = task => {
     editTaskOnServer(e, task).then(editTaskOnUI(e, task))
   );
 
-  tasksTableEl.append(taskEl);
+  doneTasksTableEl.append(taskEl);
 };
 
 const editTaskOnServer = (e, task) => {
@@ -1173,7 +1177,6 @@ const createNewTaskOnServer = () => {
       status: newTaskStatus
     })
   };
-  debugger;
 
   return fetch(url, options).then(resp => resp.json());
 };
@@ -1381,6 +1384,7 @@ const deleteApplicationOnUI = () => {
     application => application.id !== applicationToDeleteId
   );
   renderApplications(user);
+  renderTasks();
   md.showNotification("top", "right", "Your application has been deleted.");
 };
 
