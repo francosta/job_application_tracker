@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :cover_letters
+  resources :sessions
   resources :tasks
   resources :applications
   resources :users

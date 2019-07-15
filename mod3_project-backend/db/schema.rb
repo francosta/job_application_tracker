@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_28_091346) do
+ActiveRecord::Schema.define(version: 2019_05_31_122904) do
 
   create_table "applications", force: :cascade do |t|
     t.string "person_of_contact"
@@ -18,7 +18,16 @@ ActiveRecord::Schema.define(version: 2019_05_28_091346) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "company_name"
+    t.string "role"
     t.index ["user_id"], name: "index_applications_on_user_id"
+  end
+
+  create_table "cover_letters", force: :cascade do |t|
+    t.text "content"
+    t.integer "application_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["application_id"], name: "index_cover_letters_on_application_id"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -27,6 +36,7 @@ ActiveRecord::Schema.define(version: 2019_05_28_091346) do
     t.integer "application_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "status"
     t.index ["application_id"], name: "index_tasks_on_application_id"
   end
 
@@ -35,6 +45,11 @@ ActiveRecord::Schema.define(version: 2019_05_28_091346) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "image"
+    t.string "education"
+    t.string "email"
+    t.string "industry"
+    t.string "city"
   end
 
 end
