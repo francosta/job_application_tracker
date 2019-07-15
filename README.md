@@ -46,9 +46,9 @@ Job Finder Tool
 # Initialization
 
 1. Clone and open the project in a code editor.
-2. Go into the `mod3_project-backend` by running `cd mod3_project-backend`
+2. Go into the `tracker-backend` by running `cd tracker-backend`
 3. Run `rails db:migrate` to create the database.
 4. Run `rails db:seed` to create the seed data.
-5. Go to the `mod3_project-frontend` directory.
+5. Go to the `tracker-frontend` directory.
 6. Run `open index.html`
 7. Login with the test user, using the following credentials: Email: "user@user.com"; Password: "password".
