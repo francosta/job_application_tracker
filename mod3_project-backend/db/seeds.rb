@@ -9,7 +9,7 @@ industries = ["Accountancy, Banking and Finance", "Business, Consulting and Mana
     User.create(name: Faker::Name.unique.name, password: Faker::String.random(3..12), education: Faker::Job.education_level, image: Faker::LoremFlickr.image, email: Faker::Internet.email, industry: industries.sample)
 end
 
-User.create(name: "Fran", email: "francisco@fcosta.pt", password: "password", education: "Doctorate", image: "https://drive.google.com/uc?&id=1AM-P8361aVt4cB0Pl9jJs7nHQCJAUZdv", industry: industries.sample, city: "London")
+User.create(name: "Fran", email: "user@user.com", password: "password", education: "Doctorate", image: "https://drive.google.com/uc?&id=1AM-P8361aVt4cB0Pl9jJs7nHQCJAUZdv", industry: industries.sample, city: "London")
 User.create(name: "Endy", email: "endyranaudo@gmail.com", password: "password", education: "First Grade", industry: industries.sample, city: "London")
 
 100.times do
