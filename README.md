@@ -11,7 +11,7 @@ Having gone through the process of searching and applying for jobs, I have found
 # Server
 
 The backend was built using Ruby on Rails with an SQL database, using an object-oriented programming approach.
-The app has 3 models: User, Application, Task and Cover Letter.
+The app has 4 models: User, Application, Task and Cover Letter.
 
 A user has many applications. An application has many tasks and has many cover letters.
 
@@ -26,7 +26,7 @@ I have added Bootstrap on top of the template. Many of the elements that support
 
 # Screenshots
 
-
+![LoginPage](https://github.com/francosta/job_application_tracker/blob/master/mod3_project-frontend/assets/img/Screenshots/Screenshot%202019-07-15%20at%2013.27.22.png)
 
 # Initialization
 
