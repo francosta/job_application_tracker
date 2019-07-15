@@ -7,6 +7,9 @@ This is a Job Application Tracker. It consists of a dashboard where a user can c
 I have built this app as the final project for my Javascript module of the Flatiron School Software Engineering bootcamp. The brief for the project was a single page application, using vanilla Javascript as the frontend and a Ruby on Rails backend.
 Having gone through the process of searching and applying for jobs, I have found that a job application tracker dashboard would be very useful.
 
+# Server
+
+The backend was built using Ruby on Rails with an SQL database.
 
 
 Things you may want to cover:
