@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_31_122904) do
+ActiveRecord::Schema.define(version: 2019_07_15_102305) do
 
   create_table "applications", force: :cascade do |t|
     t.string "person_of_contact"
