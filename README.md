@@ -24,9 +24,24 @@ The client-side of the application is built in vanilla Javascript. I have used a
 
 I have added Bootstrap on top of the template. Many of the elements that support the single-page requirement of the app are taken from Bootstrap, e.g., modals for editing profile, adding applications or searching for jobs.
 
-# Screenshots
+# Screenshots and Demo
+
+
 
 ![LoginPage](https://github.com/francosta/job_application_tracker/blob/master/mod3_project-frontend/assets/img/Screenshots/Screenshot%202019-07-15%20at%2013.27.22.png)
+Login Page
+
+![Dashboard](https://github.com/francosta/job_application_tracker/blob/master/mod3_project-frontend/assets/img/Screenshots/Screenshot%202019-07-15%20at%2013.27.31.png)
+Dashboard
+
+![UserProfile](https://github.com/francosta/job_application_tracker/blob/master/mod3_project-frontend/assets/img/Screenshots/Screenshot%202019-07-15%20at%2013.27.59.png)
+User Profile
+
+![CoverLetterBank](https://github.com/francosta/job_application_tracker/blob/master/mod3_project-frontend/assets/img/Screenshots/Screenshot%202019-07-15%20at%2013.28.28.png)
+Cover Letter Bank
+
+![JobFinder](https://github.com/francosta/job_application_tracker/blob/master/mod3_project-frontend/assets/img/Screenshots/Screenshot%202019-07-15%20at%2013.28.36.png)
+Job Finder Tool
 
 # Initialization
 
@@ -34,27 +49,6 @@ I have added Bootstrap on top of the template. Many of the elements that support
 2. Go into the `mod3_project-backend` by running `cd mod3_project-backend`
 3. Run `rails db:migrate` to create the database.
 4. Run `rails db:seed` to create the seed data.
-5. 
-
-
-
-
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+5. Go to the `mod3_project-frontend` directory.
+6. Run `open index.html`
+7. Login with the test user, using the following credentials: Email: "user@user.com"; Password: "password".
